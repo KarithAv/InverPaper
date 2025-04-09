@@ -14,7 +14,7 @@ namespace InverPaper.Utilities
         static string DB_NAME = "ProyectoInverPaper";
         static string DB_USER = "prueba";
         static string DB_PASSWD = "281106";
-        static string Conn = "server=" + SERVER + ";database=" + DB_NAME + ";user id =" + DB_USER + ";passwd=" + DB_PASSWD + ";MultipleActiveResultSets=true";
+        static string Conn = "server=" + SERVER + ";database=" + DB_NAME + ";user id =" + DB_USER + ";password=" + DB_PASSWD + ";MultipleActiveResultSets=true;";
 
         SqlConnection Con = new SqlConnection(Conn);
 
@@ -24,12 +24,11 @@ namespace InverPaper.Utilities
             try
             {
                 Con.Open();
-                Console.WriteLine("CONEXION EXITOSA");
-                Console.ReadLine();
+                Debug.WriteLine("CONEXION EXITOSA");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
         }
         public void Disconnect()
