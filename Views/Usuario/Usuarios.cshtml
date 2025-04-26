@@ -1,0 +1,41 @@
+﻿@model IEnumerable<InverPaper.Dtos.UsuarioDto>
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.Apellido</td>
+                <td>@usuario.Correo</td>
+                <td>@usuario.NombreRol</td>
+                <td>@usuario.NombreEstado</td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = usuario.Id }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", new { id = usuario.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Crear Nuevo Usuario", "Crear")
+
+

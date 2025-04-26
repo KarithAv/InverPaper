@@ -10,5 +10,7 @@ namespace InverPaper.Dtos
         public int Id { get; set; }
         public string Rol { get; set; } = string.Empty;
         public int Response { get; set; }
+
+        public string Mensaje { get; set; } = String.Empty;
     }
 }

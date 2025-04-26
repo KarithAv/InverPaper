@@ -1,0 +1,80 @@
+﻿@model InverPaper.Models.EditarUsuarioViewModel
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Editar Usuario</h2>
+
+@using (Html.BeginForm("Editar", "Usuario", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Apellido)
+        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Apellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Correo)
+        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", type = "email" })
+        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Contraseña)
+        @Html.PasswordFor(model => model.Contraseña, new { @class = "form-control", placeholder = "Contraseña Opcional" })
+        @Html.ValidationMessageFor(m => m.Contraseña, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.IdRol)
+        @Html.DropDownListFor(model => model.IdRol, Model.Roles, "Seleccione un rol", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdRol, "", new { @class = "text-danger" })
+    </div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.IdEstado)
+    @Html.DropDownListFor(model => model.IdEstado, Model.Estados, "Seleccione un estado", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.IdEstado, "", new { @class = "text-danger" })
+</div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        @Html.ActionLink("Cancelar", "Usuarios", "Usuario", null, new { @class = "btn btn-secondary" })
+    </div>
+}
+
+<style>
+    /* Estilo CSS para ajustar los campos */
+    .form-control {
+        width: 100%; /* Ocupa todo el ancho disponible, pero se limita por el contenedor */
+        max-width: 400px; /* Limita el ancho máximo de los campos */
+        margin: 0 auto; /* Centra el formulario en el contenedor */
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 1rem; /* Espacio entre los campos */
+    }
+
+    .btn {
+        width: auto; /* No estira los botones */
+    }
+
+    /* Centra el formulario */
+    form {
+        max-width: 500px; /* Máximo ancho del formulario */
+        margin: 0 auto; /* Centra el formulario */
+    }
+</style>
