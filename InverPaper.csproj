@@ -158,13 +158,13 @@
     <Compile Include="Models\EditarUsuarioViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\EstadoRepository.cs" />
-    <Compile Include="Repositories\ProductoRepository.cs" />
-    <Compile Include="Repositories\RolRepository.cs" />
-    <Compile Include="Repositories\UsuarioRepository.cs" />
-    <Compile Include="Services\UsuarioService.cs" />
-    <Compile Include="Utilities\DBContextUtility.cs" />
-    <Compile Include="Utilities\EncriptadorUtility.cs" />
+    <Compile Include="Repositorios\EstadoRepositorio.cs" />
+    <Compile Include="Repositorios\ProductoRepositorio.cs" />
+    <Compile Include="Repositorios\RolRepositorio.cs" />
+    <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="Servicios\UsuarioServicio.cs" />
+    <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
+    <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -296,7 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Repositories\Models\" />
+    <Folder Include="Repositorios\Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using InverPaper.Repositories;
+using InverPaper.Repositorios;
 using InverPaper.Dtos;
-using InverPaper.Utilities;
+using InverPaper.Utilidades;
 using System.Text.RegularExpressions;
 
-namespace InverPaper.Services
+namespace InverPaper.Servicios
 {
 
-    public class UsuarioService
+    public class UsuarioServicio
     {
-        private UsuarioRepository _repo = new UsuarioRepository();
-        private EncriptadorUtility _encriptador = new EncriptadorUtility();
+        private UsuarioRepositorio _repo = new UsuarioRepositorio ();
+        private EncriptadorUtilidad _encriptador = new EncriptadorUtilidad();
         public UsuarioDto Login(string correo, string contraseña)
         {
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contraseña))
@@ -95,7 +95,7 @@ namespace InverPaper.Services
             // Solo encriptar si viene nueva (no encriptada)
             if (!usuarioDto.Contraseña.StartsWith("$2")) // bcrypt inicia con $2a o $2b
             {
-                usuarioDto.Contraseña = EncriptadorUtility.EncriptarPassword(usuarioDto.Contraseña);
+                usuarioDto.Contraseña = EncriptadorUtilidad.EncriptarPassword(usuarioDto.Contraseña);
             }
 
             _repo.EditarUsuario(usuarioDto);

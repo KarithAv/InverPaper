@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InverPaper.Repositories;
+using InverPaper.Repositorios;
 using InverPaper.Dtos;
-using InverPaper.Utilities;
+using InverPaper.Utilidades;
 using InverPaper.Models;
-using InverPaper.Services;
 using System.Diagnostics;
+using InverPaper.Servicios;
 
 namespace InverPaper.Controllers
 {
     public class UsuarioController : Controller
     {
-        private UsuarioRepository _usuarioRepo = new UsuarioRepository();
-        private UsuarioService _usuarioService = new UsuarioService();
-        private RolRepository _rolRepo = new RolRepository();
-        private EstadoRepository _estadoRepo = new EstadoRepository();
+        private UsuarioRepositorio _usuarioRepo = new UsuarioRepositorio ();
+        private UsuarioServicio _usuarioService = new UsuarioServicio();
+        private RolRepositorio _rolRepo = new RolRepositorio();
+        private EstadoRepositorio _estadoRepo = new EstadoRepositorio();
         // GET: Usuario
         public ActionResult Index()
         {

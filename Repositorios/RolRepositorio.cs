@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using InverPaper.Utilities;
+using InverPaper.Utilidades;
 using InverPaper.Dtos;
 using System.Data.SqlClient;
 
-namespace InverPaper.Repositories
+namespace InverPaper.Repositorios
 {
-    public class RolRepository
+    public class RolRepositorio
     {
-        private readonly DBContextUtility db = new DBContextUtility();
+        private readonly ContextoBDUtilidad db = new ContextoBDUtilidad();
 
         public List<RolDto> ObtenerRoles()
         {

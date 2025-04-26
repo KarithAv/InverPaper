@@ -5,9 +5,9 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace InverPaper.Utilities
+namespace InverPaper.Utilidades
 {
-    public class EncriptadorUtility
+    public class EncriptadorUtilidad
     {
             public static string EncriptarPassword(string password)
             {

@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using InverPaper.Utilities;
-using InverPaper.Repositories;
+using InverPaper.Repositorios;
 using InverPaper.Dtos;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data;
+using InverPaper.Utilidades;
 
-namespace InverPaper.Repositories
+namespace InverPaper.Repositorios
 {
-    public class UsuarioRepository 
+    public class UsuarioRepositorio
     {
         public UsuarioDto Login(string correo, string contraseña)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -66,7 +66,7 @@ namespace InverPaper.Repositories
         public List<UsuarioDto> ListarUsuarios()
         {
             var lista = new List<UsuarioDto>();
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -110,7 +110,7 @@ namespace InverPaper.Repositories
         public UsuarioDto ObtenerUsuarioPorId(int id)
         {
             UsuarioDto usuario = null;
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -150,7 +150,7 @@ namespace InverPaper.Repositories
 
         public void CrearUsuario (UsuarioDto usuario)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -158,7 +158,7 @@ namespace InverPaper.Repositories
                 db.Connect();
 
                 // Encriptar la contraseña antes de insertarla
-                string contraseñaEncriptada = EncriptadorUtility.EncriptarPassword(usuario.Contraseña);
+                string contraseñaEncriptada = EncriptadorUtilidad.EncriptarPassword(usuario.Contraseña);
 
                 string query = @"INSERT INTO Usuario (Nombre, Apellido, Correo, Contraseña, IdRol, IdEstado)
                          VALUES (@Nombre, @Apellido, @Correo, @Contraseña, @IdRol, @IdEstado)";
@@ -182,7 +182,7 @@ namespace InverPaper.Repositories
         }
         public void EditarUsuario(UsuarioDto usuario)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -229,7 +229,7 @@ namespace InverPaper.Repositories
 
         public void EliminarUsuario(int id)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -249,7 +249,7 @@ namespace InverPaper.Repositories
         }
         public bool UsuarioExiste(string correo)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
@@ -272,7 +272,7 @@ namespace InverPaper.Repositories
 
         public bool UsuarioExisteEditar(string correo, int idIgnorar)
         {
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try

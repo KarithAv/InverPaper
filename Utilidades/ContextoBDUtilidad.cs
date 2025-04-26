@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
-namespace InverPaper.Utilities
+namespace InverPaper.Utilidades
 {
-    public class DBContextUtility
+    public class ContextoBDUtilidad
     {
 
         static string SERVER = "LENOVO24\\KARITH";
