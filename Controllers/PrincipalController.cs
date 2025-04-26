@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace InverPaper.Controllers
 {
-    public class HomeController : Controller
+    public class PrincipalController : Controller
     {
         // GET: Home
         public ActionResult Index()
