@@ -1,0 +1,44 @@
+﻿@model IEnumerable<InverPaper.Dtos.ProductoDto>
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Stock Actual</th>
+            <th>Precio</th>
+            <th>Categoria</th>
+            <th>Marca</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+        <tr>
+            <td>@producto.Nombre</td>
+            <td>@producto.Descripcion</td>
+            <td>@producto.StockActual</td>
+            <td>@producto.PrecioVenta</td>
+            <td>@producto.NombreMarca</td>
+            <td>@producto.NombreEstado</td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = producto.Id }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = producto.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Crear Nuevo Producto", "Crear")
+>
+

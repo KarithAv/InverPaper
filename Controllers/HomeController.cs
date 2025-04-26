@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InverPaper.Utilities;
 
 namespace InverPaper.Controllers
 {
     public class HomeController : Controller
     {
+        // GET: Home
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Usuarios()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return View();
+        }
+        public ActionResult Productos()
+        {
+            return View();
+        }
+        public ActionResult Categorias()
+        {
+            return View();
+        }
+        public ActionResult Marcas()
+        {
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

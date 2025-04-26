@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Iniciar sesión - Inverpaper</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container-fluid {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #007bff; /* Azul */
+            width: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+
+            .sidebar img {
+                max-width: 70%;
+                height: auto;
+            }
+
+        .content {
+            background-color: #f2f2f2;
+            width: 65%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-orange {
+            background-color: #ff7b00;
+            border: none;
+            color: white;
+        }
+
+            .btn-orange:hover {
+                background-color: #e06d00;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="sidebar">
+            <img src="~/Content/imagenes/logo-inverpaper.png" alt="Inverpaper Logo" />
+        </div>
+        <div class="content">
+            <div class="login-card">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>
