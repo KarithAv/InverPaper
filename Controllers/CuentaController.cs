@@ -8,7 +8,7 @@ using InverPaper.Models;
 
 namespace InverPaper.Controllers
 {
-    public class AccountController : Controller
+    public class CuentaController : Controller
     {
         public ActionResult Login()
         {
@@ -33,7 +33,7 @@ namespace InverPaper.Controllers
 
                 Session["usuario"] = resultado.Nombre;
                 Session["rol"] = resultado.IdRol;
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Principal");
             }
             else
             {
