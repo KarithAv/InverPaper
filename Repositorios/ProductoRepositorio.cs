@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using InverPaper.Utilities;
-using InverPaper.Repositories;
+using InverPaper.Utilidades;
+using InverPaper.Repositorios;
 using InverPaper.Dtos;
 using System.Data.SqlClient;
 
-namespace InverPaper.Repositories
+namespace InverPaper.Repositorios
 {
-    public class ProductoRepository
+    public class ProductoRepositorio
     {
         public List<ProductoDto> ListarProductos()
         {
             var lista = new List<ProductoDto>();
-            var db = new DBContextUtility();
+            var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try

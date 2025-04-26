@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InverPaper.Services;
+using InverPaper.Servicios;
 using InverPaper.Models;
 
 namespace InverPaper.Controllers
@@ -20,7 +20,7 @@ namespace InverPaper.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = new UsuarioService();
+            var service = new UsuarioServicio();
             var resultado = service.Login(model.Email, model.Contraseña);
 
             if (resultado.Respuesta == 1)
