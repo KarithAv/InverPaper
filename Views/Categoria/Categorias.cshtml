@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InverPaper.Dtos.CategoriaDto>
+@{
+    ViewBag.Title = "Categorias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Categorias</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.NombreCategoria</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@categoria.Id)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Crear Nueva Categoria", "Crear")
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="modalEliminarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalEliminarCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarCategoriaLabel">Confirmar eliminación</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar esta categoría?
+            </div>
+            <div class="modal-footer">
+                <!-- Enlace de Cancelar con JavaScript -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href='@Url.Action("Categorias", "Categoria")'">Cancelar</button>
+                @using (Html.BeginForm("Eliminar", "Categoria", FormMethod.Post))
+                {
+                    @Html.Hidden("id", "", new { id = "categoriaIdEliminar" })
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmarEliminar(idCategoria) {
+        $('#categoriaIdEliminar').val(idCategoria); // Pone el id en el hidden
+        $('#modalEliminarCategoria').modal('show'); // Abre el modal
+    }
+</script>

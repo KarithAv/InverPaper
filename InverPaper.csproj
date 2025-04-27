@@ -136,7 +136,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\CuentaController.cs" />
+    <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\PrincipalController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -154,14 +156,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearCategoriaViewModel.cs" />
+    <Compile Include="Models\CrearMarcaViewModel.cs" />
     <Compile Include="Models\CrearUsuarioViewModel.cs" />
     <Compile Include="Models\EditarUsuarioViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CategoriaRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
+    <Compile Include="Repositorios\MarcaRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\RolRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="Servicios\CategoriaServicio.cs" />
+    <Compile Include="Servicios\MarcaServicio.cs" />
     <Compile Include="Servicios\UsuarioServicio.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
@@ -284,15 +292,15 @@
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Cuenta\Login.cshtml" />
-    <Content Include="Views\Principal\Productos.cshtml" />
-    <Content Include="Views\Principal\Categorias.cshtml" />
-    <Content Include="Views\Principal\Marcas.cshtml" />
     <Content Include="Views\Usuario\Usuarios.cshtml" />
     <Content Include="Views\Usuario\Crear.cshtml" />
-    <Content Include="Views\Usuario\Eliminar.cshtml" />
     <Content Include="Views\Usuario\Editar.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Producto\Productos.cshtml" />
+    <Content Include="Views\Categoria\Categorias.cshtml" />
+    <Content Include="Views\Categoria\Crear.cshtml" />
+    <Content Include="Views\Marca\Marcas.cshtml" />
+    <Content Include="Views\Marca\Crear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

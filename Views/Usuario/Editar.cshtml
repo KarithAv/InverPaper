@@ -38,13 +38,13 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.IdRol)
+        @Html.Label("Rol")
         @Html.DropDownListFor(model => model.IdRol, Model.Roles, "Seleccione un rol", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.IdRol, "", new { @class = "text-danger" })
     </div>
 
 <div class="form-group">
-    @Html.LabelFor(m => m.IdEstado)
+    @Html.Label("Estado")
     @Html.DropDownListFor(model => model.IdEstado, Model.Estados, "Seleccione un estado", new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.IdEstado, "", new { @class = "text-danger" })
 </div>
