@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InverPaper.Dtos.MarcaDto>
+@{
+    ViewBag.Title = "Marcas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Marcas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var marca in Model)
+        {
+            <tr>
+                <td>@marca.NombreMarca</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@marca.Id)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Crear Nueva Marca", "Crear")
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="modalEliminarMarca" tabindex="-1" role="dialog" aria-labelledby="modalEliminarMarcaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarMarcaLabel">Confirmar eliminación</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar esta marca?
+            </div>
+            <div class="modal-footer">
+                <!-- Enlace de Cancelar con JavaScript -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href='@Url.Action("Marcas", "Marca")'">Cancelar</button>
+                @using (Html.BeginForm("Eliminar", "Marca", FormMethod.Post))
+                {
+                    @Html.Hidden("id", "", new { id = "marcaIdEliminar" })
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmarEliminar(idMarca) {
+        $('#marcaIdEliminar').val(idMarca); // Pone el id en el hidden
+        $('#modalEliminarMarca').modal('show'); // Abre el modal
+    }
+</script>
+
