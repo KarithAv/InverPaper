@@ -161,6 +161,7 @@
     <Compile Include="Models\CrearUsuarioViewModel.cs" />
     <Compile Include="Models\EditarUsuarioViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
     <Compile Include="Servicios\CategoriaServicio.cs" />
     <Compile Include="Servicios\MarcaServicio.cs" />
+    <Compile Include="Servicios\ProductoServicio.cs" />
     <Compile Include="Servicios\UsuarioServicio.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
@@ -301,6 +303,8 @@
     <Content Include="Views\Categoria\Crear.cshtml" />
     <Content Include="Views\Marca\Marcas.cshtml" />
     <Content Include="Views\Marca\Crear.cshtml" />
+    <Content Include="Views\Producto\Crear.cshtml" />
+    <Content Include="Views\Producto\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

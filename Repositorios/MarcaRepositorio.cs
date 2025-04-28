@@ -154,5 +154,36 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<MarcaDto> ObtenerMarcas()
+        {
+            var marcas = new List<MarcaDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+                string query = "SELECT * FROM Marca";  // Modificado para obtener todas las marcas
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        marcas.Add(new MarcaDto
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            NombreMarca = reader["NombreMarca"].ToString()
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return marcas;
+        }
+
     }
 }
