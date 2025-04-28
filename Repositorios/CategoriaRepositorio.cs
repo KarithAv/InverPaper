@@ -154,5 +154,36 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<CategoriaDto> ObtenerCategorias()
+        {
+            var categorias = new List<CategoriaDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+                string query = "SELECT * FROM Categoria";  // Modificado para obtener todas las categorías
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        categorias.Add(new CategoriaDto
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            NombreCategoria = reader["NombreCategoria"].ToString()
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return categorias;
+        }
+
     }
 }
