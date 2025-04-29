@@ -234,7 +234,46 @@ namespace InverPaper.Repositorios
 
             return producto;
         }
+        public List<ProductoDto> ObtenerProductosActivos()
+        {
+            List<ProductoDto> productos = new List<ProductoDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
 
+            try
+            {
+                db.Connect();
+                string query = @"SELECT Id, Nombre, PrecioVenta, StockActual
+                         FROM Producto
+                         WHERE IdEstado = 1";
+        
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ProductoDto producto = new ProductoDto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
+                                PrecioVenta = Convert.ToDecimal(reader["PrecioVenta"]),
+                                StockActual = Convert.ToInt32(reader["StockActual"])
+                                // Agrega más campos si los necesitas, pero SOLO usa campos que pidas en el SELECT
+                            };
+
+                            productos.Add(producto);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return productos;
+        }
 
     }
 }
