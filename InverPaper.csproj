@@ -142,6 +142,7 @@
     <Compile Include="Controllers\PrincipalController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Dtos\AjusteInventarioDto.cs" />
     <Compile Include="Dtos\CategoriaDto.cs" />
     <Compile Include="Dtos\DetalleVentaDto.cs" />
@@ -159,20 +160,25 @@
     <Compile Include="Models\CrearCategoriaViewModel.cs" />
     <Compile Include="Models\CrearMarcaViewModel.cs" />
     <Compile Include="Models\CrearUsuarioViewModel.cs" />
+    <Compile Include="Models\DetalleVentaViewModel.cs" />
     <Compile Include="Models\EditarUsuarioViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
+    <Compile Include="Models\VentaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\MarcaRepositorio.cs" />
+    <Compile Include="Repositorios\MetodoPagoRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\RolRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="Repositorios\VentaRepositorio.cs" />
     <Compile Include="Servicios\CategoriaServicio.cs" />
     <Compile Include="Servicios\MarcaServicio.cs" />
     <Compile Include="Servicios\ProductoServicio.cs" />
     <Compile Include="Servicios\UsuarioServicio.cs" />
+    <Compile Include="Servicios\VentaServicio.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
   </ItemGroup>
@@ -305,6 +311,7 @@
     <Content Include="Views\Marca\Crear.cshtml" />
     <Content Include="Views\Producto\Crear.cshtml" />
     <Content Include="Views\Producto\Editar.cshtml" />
+    <Content Include="Views\Venta\RegistrarVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

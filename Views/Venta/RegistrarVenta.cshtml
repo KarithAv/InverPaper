@@ -1,0 +1,83 @@
+﻿@model InverPaper.Models.VentaViewModel
+
+@{
+    ViewBag.Title = "Registrar Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registrar Venta</h2>
+
+@using (Html.BeginForm("RegistrarVenta", "Venta", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.IdUsuario, "ID Usuario")
+        @Html.TextBoxFor(m => m.IdUsuario, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdUsuario, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.IdMetPago, "Método de Pago")
+        @Html.DropDownListFor(m => m.IdMetPago, Model.MetodosPago, "-- Seleccione --", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdMetPago, "", new { @class = "text-danger" })
+    </div>
+
+    <h4>Productos Disponibles</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ProductosDisponibles.Count; i++)
+            {
+                var producto = Model.ProductosDisponibles[i];
+                <tr>
+                    <td>
+                        @producto.Nombre
+                        <input type="hidden" name="DetallesVenta[@i].NombreProducto" value="@producto.Nombre" />
+                    </td>
+                    <td>
+                        @producto.PrecioVenta
+                        <input type="hidden" name="DetallesVenta[@i].Precio" value="@producto.PrecioVenta" />
+                    </td>
+                    <td>
+                        @producto.StockActual
+                    </td>
+                    <td>
+                        <input type="number" name="DetallesVenta[@i].Cantidad" min="0" value="0" class="form-control" />
+                        <input type="hidden" name="DetallesVenta[@i].IdProducto" value="@producto.Id" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Registrar Venta</button>
+}
+<style>
+    /* Estilo CSS para ajustar los campos */
+    .form-control {
+        width: 100%; /* Ocupa todo el ancho disponible, pero se limita por el contenedor */
+        max-width: 400px; /* Limita el ancho máximo de los campos */
+        margin: 0 auto; /* Centra el formulario en el contenedor */
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 1rem; /* Espacio entre los campos */
+    }
+
+    .btn {
+        width: auto; /* No estira los botones */
+    }
+
+    /* Centra el formulario */
+    form {
+        max-width: 500px; /* Máximo ancho del formulario */
+        margin: 0 auto; /* Centra el formulario */
+    }
+</style>
