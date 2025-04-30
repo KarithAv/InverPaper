@@ -20,6 +20,9 @@ namespace InverPaper.Repositorios
             {
                 db.Connect();
 
+                // Calcular el total de la venta
+                venta.Total = detallesVenta.Sum(d => d.Subtotal);  // Sumar los subtotales
+
                 // Iniciar transacción
                 using (var transaction = conn.BeginTransaction())
                 {
@@ -46,6 +49,7 @@ namespace InverPaper.Repositorios
                         command.Parameters.AddWithValue("@IdUsuario", venta.IdUsuario);
                         command.Parameters.AddWithValue("@IdMetPago", venta.IdMetPago);
                         command.Parameters.AddWithValue("@DetalleVenta", dtDetalleVenta).SqlDbType = SqlDbType.Structured;
+                        command.Parameters.AddWithValue("@Total", venta.Total);  // Agregar Total
 
                         // Ejecutar el Stored Procedure
                         command.ExecuteNonQuery();
