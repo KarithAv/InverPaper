@@ -9,11 +9,8 @@
 
 @using (Html.BeginForm("RegistrarVenta", "Venta", FormMethod.Post))
 {
-    <div class="form-group">
-        @Html.LabelFor(m => m.IdUsuario, "ID Usuario")
-        @Html.TextBoxFor(m => m.IdUsuario, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.IdUsuario, "", new { @class = "text-danger" })
-    </div>
+    @Html.HiddenFor(m => m.IdUsuario)
+
 
     <div class="form-group">
         @Html.LabelFor(m => m.IdMetPago, "Método de Pago")

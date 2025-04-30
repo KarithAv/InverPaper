@@ -7,8 +7,11 @@ using InverPaper.Servicios;
 using InverPaper.Models;
 using InverPaper.Repositorios;
 using InverPaper.Dtos;
+using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(2)]
     public class VentaController : Controller
     {
         private VentaServicio _ventaServicio = new VentaServicio();
@@ -20,6 +23,7 @@ namespace InverPaper.Controllers
         {
                 var viewModel = new VentaViewModel
                 {
+                    IdUsuario = (int)Session["IdUsuario"],
                     ProductosDisponibles = _productoRepo.ObtenerProductosActivos(),
                     MetodosPago = _ventaServicio.ObtenerMetodosPagoDisponibles(),
                     DetallesVenta = new List<DetalleVentaViewModel>() // Para evitar null
@@ -36,6 +40,8 @@ namespace InverPaper.Controllers
                 model.MetodosPago = _ventaServicio.ObtenerMetodosPagoDisponibles();
                 return View(model);
             }
+
+            int idUsuario = (int)Session["IdUsuario"];
 
             var venta = new VentaDto
             {

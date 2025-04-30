@@ -30,7 +30,7 @@ namespace InverPaper.Controllers
                     ModelState.AddModelError("", "Tu cuenta está inactiva. Contacta al administrador.");
                     return View(model);
                 }
-
+                Session["IdUsuario"] = resultado.Id;
                 Session["usuario"] = resultado.Nombre;
                 Session["rol"] = resultado.IdRol;
                 return RedirectToAction("Index", "Principal");

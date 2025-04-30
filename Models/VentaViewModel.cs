@@ -16,6 +16,8 @@ namespace InverPaper.Models
         [Required(ErrorMessage = "Seleccione método de pago")]
         public int IdMetPago { get; set; }
 
+        public decimal Total { get; set; }
+
         public List<DetalleVentaViewModel> DetallesVenta { get; set; } = new List<DetalleVentaViewModel>();
 
         public List<ProductoDto> ProductosDisponibles { get; set; }
