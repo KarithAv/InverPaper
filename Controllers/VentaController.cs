@@ -60,6 +60,7 @@ namespace InverPaper.Controllers
                 }).ToList();
 
             _ventaServicio.RegistrarVenta(venta, detalles);
+            TempData["VentaExitosa"] = "¡Venta registrada exitosamente!";
 
             return RedirectToAction("RegistrarVenta"); // o a una vista de confirmación
         }

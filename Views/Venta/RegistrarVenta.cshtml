@@ -4,111 +4,230 @@
     ViewBag.Title = "Registrar Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Registrar Venta</h2>
-
-@using (Html.BeginForm("RegistrarVenta", "Venta", FormMethod.Post))
+@if (TempData["VentaExitosa"] != null)
 {
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var modalElement = document.getElementById('ventaExitosaModal');
+            var ventaModal = new bootstrap.Modal(modalElement);
+            ventaModal.show();
+
+            setTimeout(function () {
+                ventaModal.hide();
+            }, 1000);
+        });
+    </script>
+}
+
+<h2 class="text-center">Registrar Venta</h2>
+
+@using (Html.BeginForm("RegistrarVenta", "Venta", FormMethod.Post, new { id = "formVenta" }))
+{
+
     @Html.HiddenFor(m => m.IdUsuario)
 
-
+    <!-- Selección de método de pago -->
     <div class="form-group">
         @Html.LabelFor(m => m.IdMetPago, "Método de Pago")
-        @Html.DropDownListFor(m => m.IdMetPago, Model.MetodosPago, "-- Seleccione --", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.IdMetPago, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(m => m.IdMetPago, Model.MetodosPago, "-- Seleccione --", new { @class = "form-control", id = "metodoPagoSelect" })
+        <span id="metodoPagoError" class="text-danger" style="display:none;">Seleccione un método de pago.</span>
     </div>
 
-    <h4>Productos Disponibles</h4>
-    <table class="table table-bordered">
-        <thead>
+
+    <!-- Selector de productos y cantidad -->
+    <div class="form-row align-items-center mb-4">
+        <div class="col-md-6">
+            <select id="productoSelect" class="form-control">
+                <option value="">-- Seleccione un producto --</option>
+                @foreach (var producto in Model.ProductosDisponibles)
+                {
+                    <option value="@producto.Id" data-nombre="@producto.Nombre" data-precio="@producto.PrecioVenta" data-stock="@producto.StockActual">
+                        @producto.Nombre (@producto.PrecioVenta)
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="number" id="cantidadInput" class="form-control" placeholder="Cantidad" min="1" value="1" />
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success w-100" onclick="agregarAlCarrito()">Añadir</button>
+        </div>
+    </div>
+
+    <!-- Tabla del carrito -->
+    <table class="table table-bordered table-striped" id="carritoTable">
+        <thead class="thead-dark">
             <tr>
-                <th>Nombre</th>
+                <th>Producto</th>
                 <th>Precio</th>
-                <th>Stock</th>
                 <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Quitar</th>
             </tr>
         </thead>
-        <tbody>
-            @for (int i = 0; i < Model.ProductosDisponibles.Count; i++)
-            {
-                var producto = Model.ProductosDisponibles[i];
-                <tr>
-                    <td>
-                        @producto.Nombre
-                        <input type="hidden" name="DetallesVenta[@i].NombreProducto" value="@producto.Nombre" />
-                    </td>
-                    <td>
-                        @producto.PrecioVenta
-                        <input type="hidden" name="DetallesVenta[@i].Precio" value="@producto.PrecioVenta" />
-                    </td>
-                    <td>
-                        @producto.StockActual
-                    </td>
-                    <td>
-                        <input type="number" name="DetallesVenta[@i].Cantidad" min="0" value="0" class="form-control" />
-                        <input type="hidden" name="DetallesVenta[@i].IdProducto" value="@producto.Id" />
-                    </td>
-                </tr>
-            }
-        </tbody>
+        <tbody></tbody>
     </table>
-
-    <div class="text-end mt-3">
-        <h4>Total: $<span id="totalVenta">0.00</span></h4>
-    </div>
+    <span id="carritoError" class="text-danger" style="display:none;">Agregue al menos un producto al carrito.</span>
 
 
-    <button type="submit" class="btn btn-primary">Registrar Venta</button>
+    <h4 class="text-right">Total: $<span id="totalVenta">0.00</span></h4>
+
+    <button type="submit" class="btn btn-primary w-100">Registrar Venta</button>
 }
+<div class="modal fade" id="ventaExitosaModal" tabindex="-1" aria-labelledby="ventaExitosaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="ventaExitosaLabel">Venta Exitosa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¡La venta se ha registrado exitosamente!
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <style>
-    /* Estilo CSS para ajustar los campos */
+    /* Estilo CSS para organizar la vista de forma uniforme */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+
     .form-control {
-        width: 100%; /* Ocupa todo el ancho disponible, pero se limita por el contenedor */
-        max-width: 400px; /* Limita el ancho máximo de los campos */
-        margin: 0 auto; /* Centra el formulario en el contenedor */
+        width: 100%;
+        max-width: 100%;
         box-sizing: border-box;
     }
 
-    .form-group {
-        margin-bottom: 1rem; /* Espacio entre los campos */
-    }
-
     .btn {
-        width: auto; /* No estira los botones */
+        width: 100%; /* Asegura que los botones tengan el mismo tamaño */
     }
 
-    /* Centra el formulario */
+    /* Estilos adicionales */
+    table {
+        margin-top: 20px;
+    }
+
+    th, td {
+        text-align: center;
+    }
+
+    #carritoTable {
+        width: 100%;
+    }
+
+    /* Centrado del formulario */
     form {
-        max-width: 500px; /* Máximo ancho del formulario */
-        margin: 0 auto; /* Centra el formulario */
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h4 {
+        margin-top: 20px;
     }
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const inputsCantidad = document.querySelectorAll("input[name^='DetallesVenta'][name$='Cantidad']");
-        inputsCantidad.forEach(input => {
-            input.addEventListener("input", calcularTotal);
-        });
+    function agregarAlCarrito() {
+        const select = document.getElementById("productoSelect");
+        const cantidadInput = document.getElementById("cantidadInput");
 
-        calcularTotal(); // Calcula al cargar
-    });
+        const id = select.value;
+        const nombre = select.options[select.selectedIndex].dataset.nombre;
+        const precio = parseFloat(select.options[select.selectedIndex].dataset.precio);
+        const stock = parseInt(select.options[select.selectedIndex].dataset.stock);
+        const cantidad = parseInt(cantidadInput.value);
+
+        if (!id || cantidad < 1) {
+            alert("Seleccione un producto válido y una cantidad mayor a 0.");
+            return;
+        }
+
+        if (stock === 0) {
+            alert(`No hay stock disponible para el producto "${nombre}".`);
+            return;
+        }
+
+        if (cantidad > stock) {
+            alert(`Solo hay ${stock} unidades disponibles para el producto "${nombre}".`);
+            return;
+        }
+
+        const subtotal = (precio * cantidad).toFixed(2);
+        const tbody = document.querySelector("#carritoTable tbody");
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+        <td>${nombre}<input type="hidden" name="DetallesVenta[].NombreProducto" value="${nombre}" />
+            <input type="hidden" name="DetallesVenta[].IdProducto" value="${id}" /></td>
+        <td>${precio.toFixed(2)}<input type="hidden" name="DetallesVenta[].Precio" value="${precio}" /></td>
+        <td>${cantidad}<input type="hidden" name="DetallesVenta[].Cantidad" value="${cantidad}" /></td>
+        <td class="subtotal">${subtotal}</td>
+        <td><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove(); calcularTotal(); reorganizarIndices();">Quitar</button></td>
+    `;
+        tbody.appendChild(row);
+
+        calcularTotal();
+        reorganizarIndices();
+        select.selectedIndex = 0;
+    }
+
+
+    function reorganizarIndices() {
+        const filas = document.querySelectorAll("#carritoTable tbody tr");
+
+        filas.forEach((fila, index) => {
+            fila.querySelectorAll("input[type=hidden]").forEach(input => {
+                const parts = input.name.split('.');
+                parts[0] = `DetallesVenta[${index}]`;
+                input.name = parts.join('.');
+            });
+        });
+    }
 
     function calcularTotal() {
         let total = 0;
-        const filas = document.querySelectorAll("tbody tr");
-
-        filas.forEach((fila, index) => {
-            const cantidadInput = fila.querySelector(`input[name='DetallesVenta[${index}].Cantidad']`);
-            const precioInput = fila.querySelector(`input[name='DetallesVenta[${index}].Precio']`);
-
-            const cantidad = parseFloat(cantidadInput.value) || 0;
-            const precio = parseFloat(precioInput.value) || 0;
-
-            total += cantidad * precio;
+        document.querySelectorAll("#carritoTable .subtotal").forEach(cell => {
+            total += parseFloat(cell.textContent) || 0;
         });
-
         document.getElementById("totalVenta").textContent = total.toFixed(2);
     }
-</script>
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("formVenta");
+
+        form.addEventListener("submit", function (e) {
+            const metodoPagoSelect = document.getElementById("metodoPagoSelect");
+            const carritoTable = document.getElementById("carritoTable").getElementsByTagName("tbody")[0];
+
+            let valid = true;
+
+            // Validar método de pago
+            if (!metodoPagoSelect.value) {
+                document.getElementById("metodoPagoError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("metodoPagoError").style.display = "none";
+            }
+
+            // Validar que haya al menos un producto en el carrito
+            if (carritoTable.rows.length === 0) {
+                document.getElementById("carritoError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("carritoError").style.display = "none";
+            }
+
+            if (!valid) {
+                e.preventDefault(); // Bloquea el envío si hay errores
+            }
+        });
+    });
+</script>

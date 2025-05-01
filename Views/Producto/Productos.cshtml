@@ -39,8 +39,7 @@
         }
     </tbody>
 </table>
-
-@Html.ActionLink("Crear Nuevo Producto", "Crear")
+<button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Crear", "Producto")'">Crear Producto</button>
 
 <!-- Modal de Confirmación -->
 <div class="modal fade" id="modalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">
