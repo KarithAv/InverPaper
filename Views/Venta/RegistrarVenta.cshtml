@@ -53,6 +53,11 @@
         </tbody>
     </table>
 
+    <div class="text-end mt-3">
+        <h4>Total: $<span id="totalVenta">0.00</span></h4>
+    </div>
+
+
     <button type="submit" class="btn btn-primary">Registrar Venta</button>
 }
 <style>
@@ -78,3 +83,32 @@
         margin: 0 auto; /* Centra el formulario */
     }
 </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputsCantidad = document.querySelectorAll("input[name^='DetallesVenta'][name$='Cantidad']");
+        inputsCantidad.forEach(input => {
+            input.addEventListener("input", calcularTotal);
+        });
+
+        calcularTotal(); // Calcula al cargar
+    });
+
+    function calcularTotal() {
+        let total = 0;
+        const filas = document.querySelectorAll("tbody tr");
+
+        filas.forEach((fila, index) => {
+            const cantidadInput = fila.querySelector(`input[name='DetallesVenta[${index}].Cantidad']`);
+            const precioInput = fila.querySelector(`input[name='DetallesVenta[${index}].Precio']`);
+
+            const cantidad = parseFloat(cantidadInput.value) || 0;
+            const precio = parseFloat(precioInput.value) || 0;
+
+            total += cantidad * precio;
+        });
+
+        document.getElementById("totalVenta").textContent = total.toFixed(2);
+    }
+</script>
+
