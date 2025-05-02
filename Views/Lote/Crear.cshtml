@@ -1,0 +1,48 @@
+﻿@model InverPaper.Models.LoteViewModel
+@{
+    ViewBag.Title = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.Advertencia != null)
+{
+    <div class="alert alert-warning">
+        @ViewBag.Advertencia
+    </div>
+}
+
+<h2>Crear Lote</h2>
+@using (Html.BeginForm("Crear", "Lote", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.IdProducto)
+        @Html.DropDownListFor(m => m.IdProducto, Model.Productos, "-- Selecciona un producto --", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdProducto)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumeroLote)
+        @Html.TextBoxFor(m => m.NumeroLote, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumeroLote)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cantidad)
+        @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "number", step = "1" })
+        @Html.ValidationMessageFor(m => m.Cantidad)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PrecioCompra)
+        @Html.TextBoxFor(m => m.PrecioCompra, new { @class = "form-control", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(m => m.PrecioCompra)
+    </div>
+
+    <div class="form-group">
+        <label>Fecha de ingreso</label>
+        <input type="text" class="form-control" value="@DateTime.Now.ToShortDateString()" readonly />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+}
+
