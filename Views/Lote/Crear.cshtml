@@ -23,31 +23,27 @@
     <div class="form-group">
         @Html.LabelFor(m => m.IdProducto)
         @Html.DropDownListFor(m => m.IdProducto, Model.Productos, "-- Selecciona un producto --", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.IdProducto)
+        @Html.ValidationMessageFor(m => m.IdProducto, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.NumeroLote)
         @Html.TextBoxFor(m => m.NumeroLote, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.NumeroLote)
+        @Html.ValidationMessageFor(m => m.NumeroLote, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Cantidad)
         @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "number", step = "1" })
-        @Html.ValidationMessageFor(m => m.Cantidad)
+        @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.PrecioCompra)
         @Html.TextBoxFor(m => m.PrecioCompra, new { @class = "form-control", type = "number", step = "0.01" })
-        @Html.ValidationMessageFor(m => m.PrecioCompra)
+        @Html.ValidationMessageFor(m => m.PrecioCompra, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        <label>Fecha de ingreso</label>
-        <input type="text" class="form-control" value="@DateTime.Now.ToShortDateString()" readonly />
-    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Guardar</button>
         @Html.ActionLink("Cancelar", "Productos", "Producto", null, new { @class = "btn btn-secondary" })
