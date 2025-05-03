@@ -33,7 +33,6 @@ namespace InverPaper.Repositorios
                             command.Parameters.AddWithValue("@Cantidad", lote.Cantidad);
                             command.Parameters.AddWithValue("@PrecioCompra", lote.PrecioCompra);
                             command.Parameters.AddWithValue("@NumeroLote", lote.NumeroLote);
-                            //command.Parameters.AddWithValue("@FechaCompra", lote.FechaCompra);  // Añadimos la fecha de compra
 
                             command.ExecuteNonQuery();
 

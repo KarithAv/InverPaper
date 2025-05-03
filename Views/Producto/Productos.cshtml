@@ -23,23 +23,24 @@
     <tbody>
         @foreach (var producto in Model)
         {
-        <tr>
-            <td>@producto.Nombre</td>
-            <td>@producto.Descripcion</td>
-            <td>@producto.StockActual</td>
-            <td>@producto.PrecioVenta</td>
-            <td>@producto.NombreCategoria</td>
-            <td>@producto.NombreMarca</td>
-            <td>@producto.NombreEstado</td>
-            <td>
-                <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Editar", "Producto", new { id = producto.Id })'">Editar</button> |
-                <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@producto.Id)">Eliminar</button>
-            </td>
-        </tr>
+            <tr>
+                <td>@producto.Nombre</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.StockActual</td>
+                <td>@producto.PrecioVenta</td>
+                <td>@producto.NombreCategoria</td>
+                <td>@producto.NombreMarca</td>
+                <td>@producto.NombreEstado</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Editar", "Producto", new { id = producto.Id })'">Editar</button> |
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@producto.Id)">Eliminar</button>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Crear", "Producto")'">Crear Producto</button>
+<button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Crear", "Lote")'">Crear Lote</button>
 
 <!-- Modal de Confirmación -->
 <div class="modal fade" id="modalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">

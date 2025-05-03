@@ -274,6 +274,27 @@ namespace InverPaper.Repositorios
 
             return productos;
         }
+        public void ActualizarPrecioVenta(int idProducto, decimal nuevoPrecio)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
 
+            try
+            {
+                db.Connect();
+                string query = "UPDATE Producto SET PrecioVenta = @PrecioVenta WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@PrecioVenta", nuevoPrecio);
+                    cmd.Parameters.AddWithValue("@Id", idProducto);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace InverPaper.Servicios
         {
             var result = new LoteDto();
 
-            // Obtener producto para comparar precios
             var producto = _productoRepo.ObtenerProductoPorId(lote.IdProducto);
 
             if (producto == null)
@@ -26,7 +25,6 @@ namespace InverPaper.Servicios
                 return result;
             }
 
-            // Validación básica
             if (lote.Cantidad <= 0 || lote.PrecioCompra <= 0)
             {
                 result.Response = 0;
@@ -34,15 +32,22 @@ namespace InverPaper.Servicios
                 return result;
             }
 
-            // Detectar diferencia de precio
+            // Si el precio es diferente y el usuario no ha confirmado, mostramos advertencia
             if (producto.PrecioVenta != 0 && lote.PrecioCompra != producto.PrecioVenta)
             {
-                result.Response = 2; // Código especial para advertencia de diferencia
-                result.Mensaje = $"El precio ingresado ({lote.PrecioCompra:C}) es diferente al anterior ({producto.PrecioVenta:C}). ¿Deseas ajustarlo?";
-                return result;
+                if (!lote.ConfirmarPrecioDiferente)
+                {
+                    result.Response = 2; // Advertencia
+                    result.Mensaje = $"El precio ingresado ({lote.PrecioCompra:C}) es diferente al anterior ({producto.PrecioVenta:C}). ¿Deseas ajustarlo?";
+                    return result;
+                }
+                else
+                {
+                    // El usuario confirmó, actualizamos el precio
+                    _productoRepo.ActualizarPrecioVenta(lote.IdProducto, lote.PrecioCompra);
+                }
             }
 
-            // Registrar el lote
             _loteRepo.RegistrarLote(lote);
 
             result.Response = 1;

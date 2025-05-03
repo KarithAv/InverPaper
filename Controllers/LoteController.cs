@@ -37,7 +37,6 @@ namespace InverPaper.Controllers
         [HttpPost]
         public ActionResult Crear(LoteViewModel model)
         {
-            // Recargar los productos en caso de error para que se mantenga la selección
             model.Productos = _productoRepo.ListarProductos()
                 .Select(p => new SelectListItem
                 {
@@ -47,30 +46,35 @@ namespace InverPaper.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);  // Si hay un error, volvemos con el mismo LoteViewModel
+                return View(model);
             }
 
-            // Convertir el LoteViewModel a LoteDto
             var dto = new LoteDto
             {
                 IdProducto = model.IdProducto,
                 Cantidad = model.Cantidad,
                 PrecioCompra = model.PrecioCompra,
                 NumeroLote = model.NumeroLote,
-               // FechaCompra = model.FechaIngreso  // Asignamos la fecha de ingreso aquí
+                 ConfirmarPrecioDiferente = model.ConfirmarPrecioDiferente
             };
 
-            // Llamamos al servicio
             var resultado = _loteServicio.RegistrarLote(dto);
 
-            if (resultado.Response == 1)
+            // Si hay advertencia (Precio diferente y no confirmado)
+            if (resultado.Response == 2)
             {
-                ViewBag.Advertencia = resultado.Mensaje;  // Mostramos la advertencia si el precio es diferente
-                return View(model);  // Mostramos la vista con la advertencia
+                ViewBag.Advertencia = resultado.Mensaje;
+                return View(model);
+            }
+            else if (resultado.Response == 0)
+            {
+                ModelState.AddModelError("", resultado.Mensaje);
+                return View(model);
             }
 
-            TempData["Mensaje"] = "Lote registrado con éxito";
+            // Redirigir a la vista de productos
             return RedirectToAction("Productos", "Producto");
         }
+
     }
 }
