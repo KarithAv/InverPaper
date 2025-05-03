@@ -30,7 +30,8 @@ namespace InverPaper.Models
         // Fecha generada automáticamente en el backend (no editable)
         public DateTime FechaIngreso { get; set; }
 
-        // Para la lista desplegable
+        public bool ConfirmarPrecioDiferente { get; set; }
+
         public IEnumerable<SelectListItem> Productos { get; set; }
     }
 }
