@@ -48,10 +48,18 @@ namespace InverPaper.Servicios
                 }
             }
 
-            _loteRepo.RegistrarLote(lote);
+            try
+            {
+                _loteRepo.RegistrarLote(lote);
+                result.Response = 1;
+                result.Mensaje = "Lote registrado con éxito.";
+            }
+            catch (Exception ex)
+            {
+                result.Response = 0;
+                result.Mensaje = ex.Message; // Aquí se captura si el SP lanza "Ya existe un lote..."
+            }
 
-            result.Response = 1;
-            result.Mensaje = "Lote registrado con éxito.";
             return result;
         }
     }
