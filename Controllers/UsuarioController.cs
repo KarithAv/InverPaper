@@ -126,6 +126,16 @@ namespace InverPaper.Controllers
                         return View(viewModel);
                     }
 
+                    if (!string.IsNullOrEmpty(viewModel.Contraseña) && viewModel.Contraseña != viewModel.ConfirmarContraseña)
+                    {
+                        ModelState.AddModelError("", "La contraseña y la confirmación no coinciden.");
+                        viewModel.Roles = _rolRepo.ObtenerRoles()
+                            .Select(r => new SelectListItem { Value = r.Id.ToString(), Text = r.Rol });
+                        viewModel.Estados = _estadoRepo.ObtenerEstados()
+                            .Select(e => new SelectListItem { Value = e.Id.ToString(), Text = e.NombreEstado });
+                        return View(viewModel);
+                    }
+
                     string contraseñaFinal;
 
                     if (string.IsNullOrWhiteSpace(viewModel.Contraseña))

@@ -156,6 +156,7 @@
     <Compile Include="Dtos\MotivoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\RolDto.cs" />
+    <Compile Include="Dtos\TokenRecuperacionDto.cs" />
     <Compile Include="Dtos\UsuarioDto.cs" />
     <Compile Include="Dtos\VentaDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -168,7 +169,9 @@
     <Compile Include="Models\EditarUsuarioViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\LoteViewModel.cs" />
+    <Compile Include="Models\RecuperarContraseñaViewModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
+    <Compile Include="Models\ReestablecerContraseñaViewModel.cs" />
     <Compile Include="Models\VentaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
@@ -178,6 +181,7 @@
     <Compile Include="Repositorios\MetodoPagoRepositorio.cs" />
     <Compile Include="Repositorios\ProductoRepositorio.cs" />
     <Compile Include="Repositorios\RolRepositorio.cs" />
+    <Compile Include="Repositorios\TokenRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
     <Compile Include="Repositorios\VentaRepositorio.cs" />
     <Compile Include="Servicios\CategoriaServicio.cs" />
@@ -191,6 +195,7 @@
     <Compile Include="Utilidades\CacheUtilidad.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
+    <Compile Include="Utilidades\GestorCorreoUtilidad.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -414,6 +419,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Principal\AccesoDenegado.cshtml" />
     <Content Include="Views\Lote\Crear.cshtml" />
+    <Content Include="Views\Cuenta\RecuperarContraseña.cshtml" />
+    <Content Include="Views\Cuenta\RestablecerContraseña.cshtml" />
+    <Content Include="Views\Cuenta\CuerpoCorreo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

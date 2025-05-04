@@ -62,7 +62,6 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
-
         public List<UsuarioDto> ListarUsuarios()
         {
             var lista = new List<UsuarioDto>();
@@ -286,6 +285,77 @@ namespace InverPaper.Repositorios
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = idIgnorar;
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
                     return count > 0;
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
+        public UsuarioDto ObtenerUsuarioPorCorreo(string correo)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+            UsuarioDto usuario = null;
+
+            try
+            {
+                db.Connect();
+
+                string query = @"SELECT Id, Nombre, Apellido, Correo, Contraseña, IdRol, IdEstado 
+                         FROM Usuario WHERE Correo = @Correo";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Correo", correo);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            usuario = new UsuarioDto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
+                                Apellido = reader["Apellido"].ToString(),
+                                Correo = reader["Correo"].ToString(),
+                                Contraseña = reader["Contraseña"].ToString(),
+                                IdRol = Convert.ToInt32(reader["IdRol"]),
+                                IdEstado = Convert.ToInt32(reader["IdEstado"])
+                            };
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return usuario;
+        }
+        public void ActualizarContraseña(int idUsuario, string nuevaContraseña)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+
+                // Encriptar la nueva contraseña (suponiendo que ya tienes un método para encriptarla)
+                string contraseñaEncriptada = EncriptadorUtilidad.EncriptarPassword(nuevaContraseña);
+
+                string query = @"UPDATE Usuario 
+                             SET Contraseña = @Contraseña 
+                             WHERE Id = @IdUsuario";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Contraseña", contraseñaEncriptada);
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             finally
