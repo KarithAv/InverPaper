@@ -26,6 +26,11 @@ namespace InverPaper.Models
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d).+$", ErrorMessage = "La contraseña debe contener letras y números.")]
         public string Contraseña { get; set; }
 
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar Contraseña")]
+        [System.ComponentModel.DataAnnotations.Compare("Contraseña", ErrorMessage = "Las contraseñas no coinciden.")]
+        public string ConfirmarContraseña { get; set; }
+
         [Required(ErrorMessage = "El rol es obligatorio.")]
         public int IdRol { get; set; }
 
