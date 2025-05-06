@@ -22,7 +22,7 @@ namespace InverPaper.Controllers
             var model = new LoteViewModel
             {
                 // Llenamos el dropdown con los productos
-                Productos = _productoRepo.ListarProductos()
+                Productos = _productoRepo.ObtenerProductosActivos()
                     .Select(p => new SelectListItem
                     {
                         Value = p.Id.ToString(),
@@ -37,7 +37,7 @@ namespace InverPaper.Controllers
         [HttpPost]
         public ActionResult Crear(LoteViewModel model)
         {
-            model.Productos = _productoRepo.ListarProductos()
+            model.Productos = _productoRepo.ObtenerProductosActivos()
                 .Select(p => new SelectListItem
                 {
                     Value = p.Id.ToString(),
