@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "ReporteDiario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ReporteDiario</h2>
+@using (Html.BeginForm("ReporteDiario", "Reporte", FormMethod.Get))
+{
+    <div style="margin-bottom: 20px;">
+        <label for="fecha">Seleccione la fecha:</label><br />
+        <input type="date" id="fecha" name="fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Generar Reporte PDF</button>
+        <a href="@Url.Action("Index", "Principal")" class="btn btn-secondary">Volver</a>
+    </div>
+}
+

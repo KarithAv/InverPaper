@@ -19,6 +19,7 @@ namespace InverPaper.Dtos
         public string NombreCategoria { get; set; } = String.Empty;
         public int IdMarca { get; set; }
         public string NombreMarca { get; set; } = String.Empty;
+        public int CantidadVendida { get; set; } // Solo para reportes
         public string Mensaje { get; set; } = String.Empty;
         public int Respuesta { get; set; }
     }

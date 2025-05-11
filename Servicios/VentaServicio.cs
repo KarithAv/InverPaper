@@ -45,5 +45,13 @@ namespace InverPaper.Servicios
 
             return lista;
         }
+        public List<VentaDto> ObtenerVentasDelDia(DateTime fecha)
+        {
+            return _ventaRepositorio.ObtenerVentasDelDia(fecha);
+        }
+        public List<ProductoDto> ObtenerProductosMasVendidosDelDia(DateTime fecha)
+        {
+            return _productoRepositorio.ObtenerProductosMasVendidosDelDia(fecha);
+        }
     }
 }

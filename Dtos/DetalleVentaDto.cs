@@ -10,7 +10,9 @@ namespace InverPaper.Dtos
         public int Id { get; set; }
         public int IdVenta { get; set; }
         public int IdProducto { get; set; }
+        public string NombreProducto { get; set; } = String.Empty;
         public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
         public decimal Subtotal { get; set; }
         public string Mensaje { get; set; } = String.Empty;
         public int Respuesta { get; set; }

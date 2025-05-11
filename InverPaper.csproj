@@ -50,6 +50,12 @@
     <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -67,6 +73,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -145,6 +152,7 @@
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\PrincipalController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Dtos\AjusteInventarioDto.cs" />
@@ -178,6 +186,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\AjustesInventarioRepositorio.cs" />
     <Compile Include="Repositorios\CategoriaRepositorio.cs" />
+    <Compile Include="Repositorios\DetalleVentaRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\LoteRepositorio.cs" />
     <Compile Include="Repositorios\MarcaRepositorio.cs" />
@@ -199,8 +208,10 @@
     <Compile Include="Utilidades\AutorizarSesionUtilidad.cs" />
     <Compile Include="Utilidades\CacheUtilidad.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
+    <Compile Include="Utilidades\EncabezadoPdfUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
     <Compile Include="Utilidades\GestorCorreoUtilidad.cs" />
+    <Compile Include="Utilidades\GraficoUtilidad.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -428,6 +439,8 @@
     <Content Include="Views\Cuenta\RestablecerContraseña.cshtml" />
     <Content Include="Views\Cuenta\CuerpoCorreo.cshtml" />
     <Content Include="Views\AjustesInventario\Ajustes.cshtml" />
+    <Content Include="Views\Reporte\ReporteDiario.cshtml" />
+    <Content Include="Views\Reporte\Reportes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

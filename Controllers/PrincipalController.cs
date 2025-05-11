@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InverPaper.Utilidades;
+using InverPaper.Repositorios;
 
 namespace InverPaper.Controllers
 {
@@ -14,6 +15,10 @@ namespace InverPaper.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            var repo = new ProductoRepositorio();
+            var productosBajoStock = repo.ObtenerProductosProximosAgotarse();
+            ViewBag.ProductosBajoStock = productosBajoStock;
+
             return View();
         }
         public ActionResult AccesoDenegado()

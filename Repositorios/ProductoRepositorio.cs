@@ -122,7 +122,7 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
-        public void EliminarProducto(int id)
+        public void EliminarProducto(int id, string usuario)
         {
             var db = new ContextoBDUtilidad();
             var conn = db.CONN();
@@ -130,13 +130,20 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = @"DELETE FROM Producto WHERE Id = @Id";
 
+                // 1. Establecer el usuario en el contexto de sesión
+                using (SqlCommand cmdSetUser = new SqlCommand("EXEC sp_set_session_context @key = N'Usuario', @value = @Usuario", conn))
+                {
+                    cmdSetUser.Parameters.AddWithValue("@Usuario", usuario);
+                    cmdSetUser.ExecuteNonQuery();
+                }
+
+                // 2. Ejecutar el DELETE (el trigger lo interceptará)
+                string query = @"DELETE FROM Producto WHERE Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-
-                    cmd.ExecuteNonQuery(); // No necesitamos devolver un valor
+                    cmd.ExecuteNonQuery();
                 }
             }
             finally
@@ -296,5 +303,91 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<ProductoDto> ObtenerProductosProximosAgotarse()
+        {
+            var productos = new List<ProductoDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+                string query = "SELECT Id, Nombre, StockActual, StockMin FROM Producto WHERE StockActual < StockMin";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var producto = new ProductoDto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
+                                StockActual = Convert.ToInt32(reader["StockActual"]),
+                                StockMin = Convert.ToInt32(reader["StockMin"])
+                            };
+
+                            productos.Add(producto);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return productos;
+        }
+        public List<ProductoDto> ObtenerProductosMasVendidosDelDia(DateTime fecha)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+
+                string query = @"
+        SELECT TOP 5
+            p.Id, 
+            p.Nombre, 
+            SUM(dv.Cantidad) AS TotalVendido
+        FROM Venta v
+        INNER JOIN DETALLE_VENTA dv ON dv.IdVenta = v.Id
+        INNER JOIN Producto p ON p.Id = dv.IdProducto
+        WHERE CAST(v.FechaVenta AS DATE) = @Fecha
+        GROUP BY p.Id, p.Nombre
+        ORDER BY TotalVendido DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<ProductoDto> productosVendidos = new List<ProductoDto>();
+
+                        while (reader.Read())
+                        {
+                            productosVendidos.Add(new ProductoDto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
+                                CantidadVendida = Convert.ToInt32(reader["TotalVendido"])
+                            });
+                        }
+
+                        return productosVendidos;
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
+
+
     }
 }
