@@ -47,13 +47,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="modalEliminarProductoLabel">Confirmar eliminación</h5>
+                <h5 class="modal-title" id="modalEliminarProductoLabel">Confirmar Inactivacion</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar este producto?
+                Este producto no se eliminara solo se inactivara
+                ¿Estás seguro de que deseas inactivar este producto?
             </div>
             <div class="modal-footer">
                 <!-- Botón de Cancelar con JavaScript para cerrar el modal y redirigir -->
@@ -61,7 +62,7 @@
                 @using (Html.BeginForm("Eliminar", "Producto", FormMethod.Post))
                 {
                     @Html.Hidden("id", "", new { id = "productoIdEliminar" })
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-danger">Inactivar</button>
                 }
             </div>
         </div>

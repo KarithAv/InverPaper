@@ -36,10 +36,9 @@ namespace InverPaper.Servicios
         }
 
         // Eliminar un producto por ID
-        public void EliminarProducto(int id)
+        public void EliminarProducto(int id, string usuario)
         {
-            // Puedes agregar validaciones aquí si es necesario
-            _productoRepositorio.EliminarProducto(id);
+            _productoRepositorio.EliminarProducto(id, usuario);
         }
     }
 }

@@ -70,5 +70,32 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<VentaDto> ObtenerVentasDelDia(DateTime fecha)
+        {
+            List<VentaDto> lista = new List<VentaDto>();
+            using (SqlConnection conn = new ContextoBDUtilidad().CONN())
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT v.Id, v.FechaVenta, v.Total, u.Nombre AS NombreUsuario " +
+                                                "FROM Venta v " +
+                                                "INNER JOIN Usuario u ON v.IdUsuario = u.Id " +
+                                                "WHERE CAST(v.FechaVenta AS DATE) = @FechaVenta", conn);
+                cmd.Parameters.AddWithValue("@FechaVenta", fecha.Date);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(new VentaDto
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        FechaVenta = Convert.ToDateTime(reader["FechaVenta"]),
+                        Total = Convert.ToDecimal(reader["Total"]),
+                        NombreUsuario = reader["NombreUsuario"].ToString()
+                    });
+                }
+            }
+            return lista;
+        }
+
     }
 }

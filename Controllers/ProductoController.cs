@@ -146,20 +146,17 @@ namespace InverPaper.Controllers
         {
             try
             {
-                // Llamar al servicio para eliminar el producto
-                _productoServicio.EliminarProducto(id);
+                string usuarioActual = Session["Correo"]?.ToString(); // Asegúrate de que se esté guardando al iniciar sesión
 
-                // Redirigir al listado de productos después de eliminar
+                _productoServicio.EliminarProducto(id, usuarioActual);
+
                 return RedirectToAction("Productos");
             }
             catch (Exception ex)
             {
-                // Si hay algún error, agregar un mensaje a ModelState
                 ModelState.AddModelError("", "Ocurrió un error al eliminar el producto: " + ex.Message);
                 return RedirectToAction("Productos");
             }
         }
-
-
     }
 }

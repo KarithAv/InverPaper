@@ -37,6 +37,7 @@ namespace InverPaper.Controllers
                 }
                 Session["IdUsuario"] = resultado.Id;
                 Session["usuario"] = resultado.Nombre;
+                Session["Correo"] = resultado.Correo;
                 Session["rol"] = resultado.IdRol;
                 return RedirectToAction("Index", "Principal");
             }

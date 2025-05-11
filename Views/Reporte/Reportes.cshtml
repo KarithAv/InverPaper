@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reportes</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div id="mensaje-alerta" class="alert alert-danger mensaje-custom text-center" role="alert">
+        @TempData["Mensaje"]
+    </div>
+}
+
+
+@using (Html.BeginForm("", "", FormMethod.Get, new { id = "formReporte" }))
+{
+    <div class="form-group">
+        <label for="fechaReporte">Fecha del reporte:</label>
+        <input type="date" id="fechaReporte" name="fechaReporte" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" required />
+    </div>
+    <br />
+
+    <button type="submit" class="btn btn-primary" onclick="enviarReporte('ReporteDiario')">Generar Reporte de Ventas</button>
+    <button type="submit" class="btn btn-success" onclick="enviarReporte('ReporteProductoMasVendido')">Reporte Producto Más Vendido</button>
+
+}
+<script>
+    // Espera 4 segundos y luego oculta el mensaje
+    setTimeout(function () {
+        var alerta = document.getElementById("mensaje-alerta");
+        if (alerta) {
+            alerta.style.display = 'none';
+        }
+    }, 4000); // 4000 milisegundos = 4 segundos
+</script>
+
+<script>
+    function enviarReporte(accion) {
+        var form = document.getElementById('formReporte');
+        form.action = '/Reporte/' + accion;
+    }
+</script>
+
+<style>
+    /* Estilo CSS para ajustar los campos */
+    .form-control {
+        width: 100%; /* Ocupa todo el ancho disponible, pero se limita por el contenedor */
+        max-width: 400px; /* Limita el ancho máximo de los campos */
+        margin: 0 auto; /* Centra el formulario en el contenedor */
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 1rem; /* Espacio entre los campos */
+    }
+
+    .btn {
+        width: auto; /* No estira los botones */
+    }
+
+    /* Centra el formulario */
+    form {
+        max-width: 500px; /* Máximo ancho del formulario */
+        margin: 0 auto; /* Centra el formulario */
+    }
+
+    .mensaje-custom {
+        max-width: 500px; /* ancho máximo del mensaje */
+        margin: 20px auto; /* centrado horizontal y margen superior */
+        padding: 10px 20px; /* relleno interno */
+        font-size: 16px;
+    }
+</style>
