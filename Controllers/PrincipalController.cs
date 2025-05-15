@@ -13,6 +13,7 @@ namespace InverPaper.Controllers
     public class PrincipalController : Controller
     {
         // GET: Home
+        [CacheUtilidad]
         public ActionResult Index()
         {
             var repo = new ProductoRepositorio();
@@ -25,5 +26,6 @@ namespace InverPaper.Controllers
         {
             return View();
         }
+
     }
 }

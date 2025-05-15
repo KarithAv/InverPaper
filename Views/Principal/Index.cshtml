@@ -9,7 +9,6 @@
         background-color: #f8f9fa; /* fondo gris claro */
         overflow: hidden;
     }
-
 </style>
 
 <div class="jumbotron text-center">
@@ -55,3 +54,14 @@ else
         ✅ No hay productos próximos a agotarse.
     </div>
 }
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+        // Detecta si el usuario volvió con el botón "atrás"
+        if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            // Redirige al logout para cerrar sesión
+            window.location.href = '/Cuenta/LogoutPorAtras';
+        }
+    });
+</script>
+

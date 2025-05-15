@@ -6,8 +6,8 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -49,7 +49,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar este usuario?
+                Este usuario no se eliminara solo se inactivara
+                ¿Estás seguro de que deseas inactivar este usuario?
             </div>
             <div class="modal-footer">
                 <!-- Botón de Cancelar con JavaScript para cerrar el modal y redirigir -->
@@ -57,7 +58,7 @@
                 @using (Html.BeginForm("Eliminar", "Usuario", FormMethod.Post))
                 {
                     @Html.Hidden("id", "", new { id = "usuarioIdEliminar" })
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-danger">Inactivar</button>
                 }
             </div>
         </div>

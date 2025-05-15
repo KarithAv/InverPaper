@@ -176,6 +176,12 @@ namespace InverPaper.Controllers
 
             return View(viewModel);
         }
+        public ActionResult LogoutPorAtras()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login", "Cuenta");
+        }
 
     }
 }

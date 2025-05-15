@@ -51,6 +51,48 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<LoteDto> ListarLotes()
+        {
+            var lista = new List<LoteDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+                string query = @"SELECT l.Id, l.PrecioCompra, l.Cantidad, l.FechaIngreso, l.NumeroLote, 
+                                l.IdProducto, p.Nombre
+                         FROM Lote l
+                         JOIN Producto p ON l.IdProducto = p.Id
+                         JOIN Estado e ON p.IdEstado = e.Id";
+
+
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new LoteDto
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            PrecioCompra = Convert.ToDecimal(reader["PrecioCompra"]),
+                            IdProducto = Convert.ToInt32(reader["IdProducto"]),
+                            NombreProducto = reader["Nombre"].ToString(),
+                            Cantidad = Convert.ToInt32(reader["Cantidad"]),
+                            NumeroLote = reader["NumeroLote"].ToString(),
+                            FechaIngreso = Convert.ToDateTime(reader["FechaIngreso"]),
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+
+            return lista;
+        }
 
     }
 }

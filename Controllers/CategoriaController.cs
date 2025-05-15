@@ -7,9 +7,11 @@ using InverPaper.Repositorios;
 using InverPaper.Servicios;
 using InverPaper.Dtos;
 using InverPaper.Models;
+using InverPaper.Utilidades;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class CategoriaController : Controller
     {
         private CategoriaRepositorio _categoriaRepo = new CategoriaRepositorio(); // Repositorio para manejar la base de datos
@@ -62,8 +64,25 @@ namespace InverPaper.Controllers
         // Acción para eliminar una categoría
         public ActionResult Eliminar(int id)
         {
-            _categoriaServicio.EliminarCategoria(id);  // Usamos el repositorio para eliminar la categoría
-            return RedirectToAction("Categorias");  // Redirigimos a la lista de categorías
+            try
+            {
+                _categoriaServicio.EliminarCategoria(id);
+                TempData["Mensaje"] = "La categoria ha sido desactivada correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("Categorias", "Categoria");
+        }
+        [HttpPost]
+        public ActionResult Activar(int id)
+        {
+            var repositorio = new CategoriaRepositorio();
+            repositorio.ActivarCategoria(id);
+            TempData["Mensaje"] = "Categoria activada correctamente.";
+            return RedirectToAction("Categorias");
         }
     }
 }

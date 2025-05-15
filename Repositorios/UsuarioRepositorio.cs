@@ -76,7 +76,8 @@ namespace InverPaper.Repositorios
                                         u.IdEstado, e.NombreEstado AS EstadoNombre
                                  FROM Usuario u
                                  JOIN Rol r ON u.IdRol = r.Id
-                                 JOIN Estado e ON u.IdEstado = e.Id";
+                                 JOIN Estado e ON u.IdEstado = e.Id
+                                 ORDER BY Nombre ASC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -147,7 +148,7 @@ namespace InverPaper.Repositorios
 
 
 
-        public void CrearUsuario (UsuarioDto usuario)
+        public void CrearUsuario (UsuarioDto usuario, string usuarioActual)
         {
             var db = new ContextoBDUtilidad();
             var conn = db.CONN();
@@ -155,6 +156,12 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
+
+                using (SqlCommand cmdSetUser = new SqlCommand("EXEC sp_set_session_context @key = N'Usuario', @value = @Usuario", conn))
+                {
+                    cmdSetUser.Parameters.AddWithValue("@Usuario", usuarioActual);
+                    cmdSetUser.ExecuteNonQuery();
+                }
 
                 // Encriptar la contraseña antes de insertarla
                 string contraseñaEncriptada = EncriptadorUtilidad.EncriptarPassword(usuario.Contraseña);
@@ -179,14 +186,21 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
-        public void EditarUsuario(UsuarioDto usuario)
+        public void EditarUsuario(UsuarioDto usuario, string usuarioActual)
         {
             var db = new ContextoBDUtilidad();
             var conn = db.CONN();
 
             try
             {
+
                 db.Connect();
+                // 1. Establecer el usuario en el contexto de sesión
+                using (SqlCommand cmdSetUser = new SqlCommand("EXEC sp_set_session_context @key = N'Usuario', @value = @Usuario", conn))
+                {
+                    cmdSetUser.Parameters.AddWithValue("@Usuario", usuarioActual);
+                    cmdSetUser.ExecuteNonQuery();
+                }
 
                 string query = @"UPDATE Usuario SET 
                             Nombre = @Nombre, 
@@ -226,7 +240,7 @@ namespace InverPaper.Repositorios
             }
         }
 
-        public void EliminarUsuario(int id)
+        public void EliminarUsuario(int id, string usuarioActual)
         {
             var db = new ContextoBDUtilidad();
             var conn = db.CONN();
@@ -234,6 +248,12 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
+                using (SqlCommand cmdSetUser = new SqlCommand("EXEC sp_set_session_context @key = N'Usuario', @value = @Usuario", conn))
+                {
+                    cmdSetUser.Parameters.AddWithValue("@Usuario", usuarioActual);
+                    cmdSetUser.ExecuteNonQuery();
+                }
+
                 string query = "DELETE FROM Usuario WHERE Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

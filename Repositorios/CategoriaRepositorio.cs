@@ -29,7 +29,10 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = @"SELECT * FROM Categoria";  // Ajusta el nombre de la tabla si es necesario
+                string query = @"SELECT c.Id, c.NombreCategoria, c.IdEstado, e.NombreEstado
+                         FROM Categoria c
+                         JOIN Estado e ON c.IdEstado = e.Id
+                                 ORDER BY NombreCategoria ASC";  
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -39,7 +42,9 @@ namespace InverPaper.Repositorios
                         lista.Add(new CategoriaDto
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            NombreCategoria = reader["NombreCategoria"].ToString()
+                            NombreCategoria = reader["NombreCategoria"].ToString(),
+                            IdEstado = Convert.ToInt32(reader["IdEstado"]),
+                            NombreEstado = reader["NombreEstado"].ToString()
                         });
                     }
                 }
@@ -120,7 +125,43 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = "DELETE FROM Categoria WHERE Id = @Id";
+
+                // Verificar si la categoria está siendo utilizada por productos
+                string verificarQuery = "SELECT COUNT(*) FROM Producto WHERE IdCategoria = @IdCategoria";
+                using (SqlCommand cmdVerificar = new SqlCommand(verificarQuery, conn))
+                {
+                    cmdVerificar.Parameters.AddWithValue("@IdCategoria", id);
+                    int cantidad = (int)cmdVerificar.ExecuteScalar();
+
+                    if (cantidad > 0)
+                    {
+                        throw new Exception("No se puede eliminar la categoria porque está siendo utilizada por productos.");
+                    }
+                }
+
+                // Eliminación lógica: cambiar el estado a Inactivo (IdEstado = 2)
+                string query = "UPDATE Categoria SET IdEstado = 2 WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
+        public void ActivarCategoria(int id)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+
+                string query = "UPDATE Categoria SET IdEstado = 1 WHERE Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -163,7 +204,10 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = "SELECT * FROM Categoria";  // Modificado para obtener todas las categorías
+                string query = @"SELECT c.Id, c.NombreCategoria, c.IdEstado, e.NombreEstado
+                         FROM Categoria c
+                         JOIN Estado e ON c.IdEstado = e.Id
+                         WHERE c.IdEstado = 1";  // Modificado para obtener todas las categorías
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

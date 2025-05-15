@@ -28,7 +28,7 @@ namespace InverPaper.Servicios
             return _repo.Login(correo, contraseña);
         }
 //-------------------------------------------------------------------------------------------------------------
-        public void CrearUsuario(UsuarioDto usuarioDto)
+        public void CrearUsuario(UsuarioDto usuarioDto, string usuarioActual)
         {
             // Validar campos
             if (string.IsNullOrWhiteSpace(usuarioDto.Nombre) || string.IsNullOrWhiteSpace(usuarioDto.Apellido))
@@ -58,10 +58,10 @@ namespace InverPaper.Servicios
                 throw new ArgumentException("Ya existe un usuario con ese correo.");
             }
             // Crear usuario
-            _repo.CrearUsuario(usuarioDto);
+            _repo.CrearUsuario(usuarioDto, usuarioActual);
         }
  //--------------------------------------------------------------------------------------------------------------------------------------------
-        public void EditarUsuario(UsuarioDto usuarioDto)
+        public void EditarUsuario(UsuarioDto usuarioDto, string usuarioActual)
         {
             // Validar los campos antes de editar
             if (usuarioDto.Id <= 0)
@@ -98,18 +98,18 @@ namespace InverPaper.Servicios
                 usuarioDto.Contraseña = EncriptadorUtilidad.EncriptarPassword(usuarioDto.Contraseña);
             }
 
-            _repo.EditarUsuario(usuarioDto);
+            _repo.EditarUsuario(usuarioDto,usuarioActual);
 
         }
 
-        public void EliminarUsuario(int id)
+        public void EliminarUsuario(int id, string usuarioActual)
         {
             if (id <= 0)
             {
                 throw new ArgumentException("El ID del usuario es inválido.");
             }
 
-            _repo.EliminarUsuario(id);
+            _repo.EliminarUsuario(id, usuarioActual);
         }
     }
 }

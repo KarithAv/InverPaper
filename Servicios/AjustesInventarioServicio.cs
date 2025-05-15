@@ -19,5 +19,10 @@ namespace InverPaper.Servicios
 
             _ajustesRepo.RegistrarAjuste(dto);
         }
+        public List<AjusteInventarioDto> ObtenerAjustesPorFecha(DateTime fecha)
+        {
+            return _ajustesRepo.ObtenerAjustesPorFecha(fecha);
+        }
+
     }
 }

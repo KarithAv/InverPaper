@@ -7,10 +7,11 @@ using InverPaper.Repositorios;
 using InverPaper.Dtos;
 using InverPaper.Models;
 using InverPaper.Servicios;
-
+using InverPaper.Utilidades;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class AjustesInventarioController : Controller
     {
         private readonly MotivoRepositorio _motivoRepo = new MotivoRepositorio();
@@ -33,7 +34,7 @@ namespace InverPaper.Controllers
              .Select(p => new SelectListItem
              {
                  Value = p.Id.ToString(),
-                 Text = p.Nombre
+                 Text = p.NombreCompleto
              }).ToList(),
 
              IdUsuario = Convert.ToInt32(Session["IdUsuario"])

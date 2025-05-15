@@ -1,0 +1,32 @@
+﻿@model IEnumerable<InverPaper.Dtos.LoteDto>
+@{
+    ViewBag.Title = "Lotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio de Compra</th>
+            <th>Fecha de Compra</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lote in Model)
+        {
+            <tr>
+                <td>@lote.NumeroLote</td>
+                <td>@lote.NombreProducto</td>
+                <td>@lote.Cantidad</td>
+                <td>@lote.PrecioCompra</td>
+                <td>@lote.FechaIngreso</td>
+            </tr>
+        }
+    </tbody>
+<table>
+ <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Productos", "Producto")'">Volver</button>
