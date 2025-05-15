@@ -7,9 +7,11 @@ using InverPaper.Repositorios;
 using InverPaper.Models;
 using InverPaper.Servicios;
 using InverPaper.Dtos;
+using InverPaper.Utilidades;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class ProductoController : Controller
     {
         private ProductoRepositorio _productoRepo = new ProductoRepositorio();

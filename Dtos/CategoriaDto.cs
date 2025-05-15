@@ -9,6 +9,8 @@ namespace InverPaper.Dtos
     {
         public int Id { get; set; }
         public string NombreCategoria { get; set; } = string.Empty;
+        public int IdEstado { get; set; }
+        public string NombreEstado { get; set; } = string.Empty;
         public int Response { get; set; }
         public string Mensaje { get; set; } = String.Empty;
     }

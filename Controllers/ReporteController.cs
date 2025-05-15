@@ -12,9 +12,12 @@ using InverPaper.Utilidades;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class ReporteController : Controller
     {
         VentaServicio _ventaServicio = new VentaServicio();
+        AjustesInventarioServicio _ajusteInventarioServicio = new AjustesInventarioServicio();
+
         public ActionResult Reportes ()
         {
             return View();
@@ -22,7 +25,6 @@ namespace InverPaper.Controllers
         public ActionResult GenerarReporte(DateTime? fecha, string reporte)
         {
             var fechaReporte = fecha ?? DateTime.Now.Date;
-
             if (reporte == "ventas")
             {
                 return ReporteDiario(fechaReporte);
@@ -30,6 +32,10 @@ namespace InverPaper.Controllers
             else if (reporte == "producto")
             {
                 return ReporteProductoMasVendido(fechaReporte);
+            }
+            else if (reporte == "ajustes")
+            {
+                return ReporteAjustesInventario(fechaReporte);
             }
 
             return RedirectToAction("Reportes");
@@ -126,16 +132,96 @@ namespace InverPaper.Controllers
             // Agregar lista de productos
             foreach (var producto in productosMasVendidos)
             {
-                doc.Add(new Paragraph($"Producto: {producto.Nombre}", FontFactory.GetFont("Arial", 12, Font.BOLD)));
-                doc.Add(new Paragraph($"Cantidad Vendida: {producto.CantidadVendida}", FontFactory.GetFont("Arial", 12, Font.NORMAL)));
-                doc.Add(new Paragraph(" "));
+                PdfPTable tabla = new PdfPTable(2);
+                tabla.WidthPercentage = 80;
+                tabla.SpacingBefore = 10f;
+                tabla.SpacingAfter = 10f;
+
+                // Estilo del encabezado
+                var fontEncabezado = FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.WHITE);
+                var fondoEncabezado = new BaseColor(255, 153, 51); // Naranja
+
+                // Celda encabezado 1
+                var celda1 = new PdfPCell(new Phrase("Producto:", fontEncabezado));
+                celda1.BackgroundColor = fondoEncabezado;
+                tabla.AddCell(celda1);
+
+                // Celda valor 1
+                tabla.AddCell(new Phrase(producto.Nombre, FontFactory.GetFont("Arial", 12, Font.NORMAL)));
+
+                // Celda encabezado 2
+                var celda2 = new PdfPCell(new Phrase("Cantidad Vendida:", fontEncabezado));
+                celda2.BackgroundColor = fondoEncabezado;
+                tabla.AddCell(celda2);
+
+                // Celda valor 2
+                tabla.AddCell(new Phrase(producto.CantidadVendida.ToString(), FontFactory.GetFont("Arial", 12, Font.NORMAL)));
+
+                doc.Add(tabla);
             }
+
 
             doc.Close();
             ms.Position = 0;
 
             return File(ms, "application/pdf", $"ReporteProductoMasVendido_{fechaReporte:yyyyMMdd}.pdf");
         }
+        public ActionResult ReporteAjustesInventario(DateTime fechaReporte)
+        {
+            var ajustes = _ajusteInventarioServicio.ObtenerAjustesPorFecha(fechaReporte);
+
+            if (ajustes == null || ajustes.Count == 0)
+            {
+                TempData["Mensaje"] = "No se encontraron ajustes de inventario en la fecha seleccionada.";
+                return RedirectToAction("Reportes");
+            }
+
+            MemoryStream ms = new MemoryStream();
+            Document doc = new Document(PageSize.A4, 25, 25, 30, 30);
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            writer.CloseStream = false;
+
+            doc.Open();
+            EncabezadoPdfUtilidad.AgregarEncabezado(doc, writer, "REPORTE DE AJUSTES DE INVENTARIO", fechaReporte);
+
+            foreach (var ajuste in ajustes)
+            {
+                PdfPTable tabla = new PdfPTable(2);
+                tabla.WidthPercentage = 80;
+                tabla.SpacingBefore = 10f;
+                tabla.SpacingAfter = 10f;
+
+                tabla.AddCell("Producto:");
+                tabla.AddCell(ajuste.NombreProducto);
+
+                tabla.AddCell("Cantidad Ajustada:");
+                tabla.AddCell(ajuste.CantidadAjustada.ToString());
+
+                tabla.AddCell("Motivo:");
+                tabla.AddCell(ajuste.NombreMotivo);
+
+                tabla.AddCell("Usuario:");
+                tabla.AddCell(ajuste.NombreUsuario);
+
+                tabla.AddCell("Fecha de Ajuste:");
+                tabla.AddCell(ajuste.FechaAjuste.ToString("yyyy-MM-dd HH:mm"));
+
+                tabla.AddCell("Acción:");
+                tabla.AddCell(ajuste.Accion ? "Entrada" : "Salida");
+
+                tabla.AddCell("Comentarios:");
+                tabla.AddCell(ajuste.Comentarios ?? "");
+
+                doc.Add(tabla);
+                doc.Add(new Paragraph(" ")); // Espacio entre tablas
+            }
+
+            doc.Close();
+            ms.Position = 0;
+
+            return File(ms, "application/pdf", $"ReporteAjustesInventario_{fechaReporte:yyyyMMdd}.pdf");
+        }
+
 
     }
 }

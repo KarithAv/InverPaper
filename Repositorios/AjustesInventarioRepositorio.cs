@@ -53,6 +53,69 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public List<AjusteInventarioDto> ObtenerAjustesPorFecha(DateTime fecha)
+        {
+            var lista = new List<AjusteInventarioDto>();
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+
+                string query = @"
+            SELECT 
+                a.Id,
+                a.IdProducto,
+                p.Nombre AS NombreProducto,
+                a.CantidadAjustada,
+                a.FechaAjuste,
+                a.IdMotivo,
+                m.Motivo AS Motivo,
+                a.IdUsuario,
+                CONCAT (u.Nombre, ' ', u.Apellido) AS NombreUsuario,
+                a.Accion,
+                a.Comentarios
+            FROM AJUSTES_INVENTARIO a
+            INNER JOIN Producto p ON p.Id = a.IdProducto
+            INNER JOIN Usuario u ON u.Id = a.IdUsuario
+            INNER JOIN Motivo m ON m.Id = a.IdMotivo
+            WHERE CAST(a.FechaAjuste AS DATE) = @Fecha";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new AjusteInventarioDto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                IdProducto = Convert.ToInt32(reader["IdProducto"]),
+                                NombreProducto = reader["NombreProducto"].ToString(),
+                                CantidadAjustada = Convert.ToInt32(reader["CantidadAjustada"]),
+                                FechaAjuste = Convert.ToDateTime(reader["FechaAjuste"]),
+                                IdMotivo = Convert.ToInt32(reader["IdMotivo"]),
+                                NombreMotivo = reader["Motivo"].ToString(),
+                                IdUsuario = Convert.ToInt32(reader["IdUsuario"]),
+                                NombreUsuario = reader["NombreUsuario"].ToString(),
+                                Accion = Convert.ToBoolean(reader["Accion"]),
+                                Comentarios = reader["Comentarios"].ToString(),
+                                Mensaje = $"{reader["NombreProducto"]} - {reader["Motivo"]} por {reader["NombreUsuario"]}"
+                            });
+                        }
+                    }
+                }
+
+                return lista;
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
 
     }
 }

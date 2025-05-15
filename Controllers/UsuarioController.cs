@@ -12,6 +12,7 @@ using InverPaper.Servicios;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class UsuarioController : Controller
     {
         private UsuarioRepositorio _usuarioRepo = new UsuarioRepositorio ();
@@ -47,6 +48,7 @@ namespace InverPaper.Controllers
             {
                 try
                 {
+                    string usuarioActual = Session["Correo"]?.ToString();
                     // ✅ Aquí se transforma el ViewModel a un DTO
                     var usuarioDto = new UsuarioDto
                     {
@@ -59,7 +61,7 @@ namespace InverPaper.Controllers
                     };
 
                     // ✅ Aquí realmente se crea el usuario en la base de datos
-                    _usuarioService.CrearUsuario(usuarioDto);
+                    _usuarioService.CrearUsuario(usuarioDto,usuarioActual);
 
                     return RedirectToAction("Usuarios");
                 }
@@ -115,6 +117,7 @@ namespace InverPaper.Controllers
             {
                 try
                 {
+                    string usuarioActual = Session["Correo"]?.ToString();
                     // Verificar si el correo está duplicado (solo si cambia el correo)
                     if (_usuarioRepo.UsuarioExisteEditar(viewModel.Correo, viewModel.Id))
                     {
@@ -159,7 +162,7 @@ namespace InverPaper.Controllers
                     };
 
 
-                    _usuarioService.EditarUsuario(usuarioDto); // Actualizar usuario
+                    _usuarioService.EditarUsuario(usuarioDto,usuarioActual); // Actualizar usuario
 
                     return RedirectToAction("Usuarios");
                 }
@@ -194,7 +197,8 @@ namespace InverPaper.Controllers
         [HttpPost, ActionName("Eliminar")]
         public ActionResult EliminarConfirmado(int id)
         {
-            _usuarioRepo.EliminarUsuario(id);
+            string usuarioActual = Session["Correo"]?.ToString();
+            _usuarioRepo.EliminarUsuario(id, usuarioActual);
             return RedirectToAction("Usuarios");
         }
 

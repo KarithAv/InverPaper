@@ -27,7 +27,8 @@ namespace InverPaper.Repositorios
                          FROM Producto p
                          JOIN Categoria c ON p.IdCategoria = c.Id
                          JOIN Marca m ON p.IdMarca = m.Id
-                         JOIN Estado e ON p.IdEstado = e.Id";
+                         JOIN Estado e ON p.IdEstado = e.Id
+                         ORDER BY p.Nombre ASC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -250,11 +251,15 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = @"SELECT Id, Nombre, PrecioVenta, StockActual
-                         FROM Producto
-                         WHERE IdEstado = 1";
-        
-        using (SqlCommand cmd = new SqlCommand(query, conn))
+                string query = @" SELECT p.Id, p.Nombre + ' (' + m.NombreMarca + ')' AS NombreCompleto,
+                               p.PrecioVenta, p.StockActual
+                               FROM Producto p
+                               INNER JOIN Marca m ON p.IdMarca = m.Id
+                               WHERE p.IdEstado = 1
+                               ORDER BY p.Nombre ASC";
+                ;
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -263,10 +268,9 @@ namespace InverPaper.Repositorios
                             ProductoDto producto = new ProductoDto
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                Nombre = reader["Nombre"].ToString(),
+                                NombreCompleto = reader["NombreCompleto"].ToString(),
                                 PrecioVenta = Convert.ToDecimal(reader["PrecioVenta"]),
-                                StockActual = Convert.ToInt32(reader["StockActual"])
-                                // Agrega más campos si los necesitas, pero SOLO usa campos que pidas en el SELECT
+                                StockActual = Convert.ToInt32(reader["StockActual"]),
                             };
 
                             productos.Add(producto);

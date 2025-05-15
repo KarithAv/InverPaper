@@ -3,13 +3,26 @@
     ViewBag.Title = "Categorias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData["Mensaje"] != null)
+{
+    <div id="mensajeTemp" class="alert alert-success mensaje-custom text-left" role="alert">
+        @TempData["Mensaje"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div id="error" class="alert alert-danger mensaje-custom text-left" role="alert">
+        @TempData["Error"]
+    </div>
+}
 
 <h2>Categorias</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
         <tr>
             <th>Nombre</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -18,8 +31,19 @@
         {
             <tr>
                 <td>@categoria.NombreCategoria</td>
+                <td>@categoria.NombreEstado</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@categoria.Id)">Eliminar</button>
+                    @if (categoria.IdEstado == 1) // Activo
+                    {
+                        <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(@categoria.Id)">Inactivar</button>
+                    }
+                    else if (categoria.IdEstado == 2) // Inactivo
+                    {
+                        <form action="@Url.Action("Activar", "Categoria")" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@categoria.Id" />
+                            <button class="btn btn-success btn-sm">Activar</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }
@@ -39,7 +63,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar esta categoría?
+                ¿Estás seguro de que deseas inactivar esta categoría?
             </div>
             <div class="modal-footer">
                 <!-- Enlace de Cancelar con JavaScript -->
@@ -47,16 +71,36 @@
                 @using (Html.BeginForm("Eliminar", "Categoria", FormMethod.Post))
                 {
                     @Html.Hidden("id", "", new { id = "categoriaIdEliminar" })
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-danger">Inactivar</button>
                 }
             </div>
         </div>
     </div>
 </div>
-
+<style>
+    .mensaje-custom {
+        max-width: 500px; /* ancho máximo del mensaje */
+        margin: 20px auto; /* centrado horizontal y margen superior */
+        padding: 10px 20px; /* relleno interno */
+        font-size: 16px;
+    }
+</style>
 <script>
     function confirmarEliminar(idCategoria) {
         $('#categoriaIdEliminar').val(idCategoria); // Pone el id en el hidden
         $('#modalEliminarCategoria').modal('show'); // Abre el modal
     }
+</script>
+<script>
+    setTimeout(function () {
+        var mensaje = document.getElementById("mensajeTemp");
+        var error = document.getElementById("errorTemp");
+
+        if (mensaje) {
+            mensaje.style.display = 'none';
+        }
+        if (error) {
+            error.style.display = 'none';
+        }
+    }, 4000); // 4 segundos de espera antes de ocultar
 </script>

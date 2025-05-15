@@ -441,6 +441,7 @@
     <Content Include="Views\AjustesInventario\Ajustes.cshtml" />
     <Content Include="Views\Reporte\ReporteDiario.cshtml" />
     <Content Include="Views\Reporte\Reportes.cshtml" />
+    <Content Include="Views\Lote\Lotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

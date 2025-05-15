@@ -7,11 +7,14 @@ using InverPaper.Repositorios;
 using InverPaper.Servicios;
 using InverPaper.Dtos;
 using InverPaper.Models;
+using InverPaper.Utilidades;
 
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class MarcaController : Controller
     {
+     
         private MarcaRepositorio _marcaRepo = new MarcaRepositorio(); // Repositorio para manejar la base de datos
         private MarcaServicio _marcaServicio = new MarcaServicio();  
         public ActionResult Index()
@@ -61,8 +64,26 @@ namespace InverPaper.Controllers
         // Acción para eliminar una categoría
         public ActionResult Eliminar(int id)
         {
-            _marcaServicio.EliminarMarca(id);  // Usamos el repositorio para eliminar la categoría
-            return RedirectToAction("Marcas");  // Redirigimos a la lista de categorías
+            try
+            {
+                _marcaServicio.EliminarMarca(id);
+                TempData["Mensaje"] = "La marca ha sido desactivada correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("Marcas", "Marca");
         }
+        [HttpPost]
+        public ActionResult Activar(int id)
+        {
+            var repositorio = new MarcaRepositorio();
+            repositorio.ActivarMarca(id);
+            TempData["Mensaje"] = "Marca activada correctamente.";
+            return RedirectToAction("Marcas");
+        }
+
     }
 }

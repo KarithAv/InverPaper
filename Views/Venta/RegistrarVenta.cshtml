@@ -41,9 +41,9 @@
                 <option value="">-- Seleccione un producto --</option>
                 @foreach (var producto in Model.ProductosDisponibles)
                 {
-                    <option value="@producto.Id" data-nombre="@producto.Nombre" data-precio="@producto.PrecioVenta" data-stock="@producto.StockActual">
-                        @producto.Nombre (@producto.PrecioVenta)
-                    </option>
+            <option value="@producto.Id" data-nombre="@producto.NombreCompleto" data-marca="@producto.NombreMarca" data-precio="@producto.PrecioVenta" data-stock="@producto.StockActual">
+                @producto.NombreCompleto - @producto.NombreMarca (@producto.PrecioVenta)
+            </option>
                 }
             </select>
         </div>

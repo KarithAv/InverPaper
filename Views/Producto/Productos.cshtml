@@ -7,8 +7,8 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
         <tr>
             <th>Nombre</th>
             <th>Descripcion</th>
@@ -41,6 +41,7 @@
 </table>
 <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Crear", "Producto")'">Crear Producto</button>
 <button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Crear", "Lote")'">Crear Lote</button>
+<button class="btn btn-primary btn-sm" onclick="window.location.href='@Url.Action("Lotes", "Lote")'">Ver Lotes</button>
 
 <!-- Modal de Confirmación -->
 <div class="modal fade" id="modalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">

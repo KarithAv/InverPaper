@@ -7,14 +7,24 @@ using InverPaper.Dtos;
 using InverPaper.Repositorios;
 using InverPaper.Servicios;
 using InverPaper.Models;
+using InverPaper.Utilidades;
+
 namespace InverPaper.Controllers
 {
+    [AutorizarSesionUtilidad]
     public class LoteController : Controller
     {
         private readonly LoteRepositorio _loteRepo = new LoteRepositorio();
         private readonly ProductoRepositorio _productoRepo = new ProductoRepositorio();
         private readonly LoteServicio _loteServicio = new LoteServicio();
 
+
+        public ActionResult Lotes()
+        {
+
+            var lista = _loteRepo.ListarLotes();
+            return View(lista);
+        }
         // GET: Lote
         [HttpGet]
         public ActionResult Crear()

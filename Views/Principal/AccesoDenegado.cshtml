@@ -4,6 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Acceso Denegado</h2>
-<p>No tienes permiso para acceder a esta sección del sistema.</p>
+<style>
+    .denegado-container {
+        color: blue;
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 12px;
+        margin-top: 50px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .denegado-container h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .denegado-container p {
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+</style>
+
+<div class="denegado-container">
+    <h2>Acceso Denegado</h2>
+    <p>No tienes permiso para acceder a esta sección del sistema.</p>
+</div>
 

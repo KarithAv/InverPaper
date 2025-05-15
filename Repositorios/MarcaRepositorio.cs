@@ -29,7 +29,10 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = @"SELECT * FROM Marca"; 
+                string query = @"SELECT m.Id, m.NombreMarca, m.IdEstado, e.NombreEstado
+                         FROM Marca m
+                         JOIN Estado e ON m.IdEstado = e.Id
+                                 ORDER BY NombreMarca ASC"; 
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -39,7 +42,9 @@ namespace InverPaper.Repositorios
                         lista.Add(new MarcaDto
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            NombreMarca = reader["NombreMarca"].ToString()
+                            NombreMarca = reader["NombreMarca"].ToString(),
+                            IdEstado = Convert.ToInt32(reader["IdEstado"]),
+                            NombreEstado = reader["NombreEstado"].ToString()
                         });
                     }
                 }
@@ -120,7 +125,22 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = "DELETE FROM Marca WHERE Id = @Id";
+
+                // Verificar si la marca está siendo utilizada por productos
+                string verificarQuery = "SELECT COUNT(*) FROM Producto WHERE IdMarca = @IdMarca";
+                using (SqlCommand cmdVerificar = new SqlCommand(verificarQuery, conn))
+                {
+                    cmdVerificar.Parameters.AddWithValue("@IdMarca", id);
+                    int cantidad = (int)cmdVerificar.ExecuteScalar();
+
+                    if (cantidad > 0)
+                    {
+                        throw new Exception("No se puede eliminar la marca porque está siendo utilizada por productos.");
+                    }
+                }
+
+                // Eliminación lógica: cambiar el estado a Inactivo (IdEstado = 2)
+                string query = "UPDATE Marca SET IdEstado = 2 WHERE Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -132,6 +152,28 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+        public void ActivarMarca(int id)
+        {
+            var db = new ContextoBDUtilidad();
+            var conn = db.CONN();
+
+            try
+            {
+                db.Connect();
+
+                string query = "UPDATE Marca SET IdEstado = 1 WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                db.Disconnect();
+            }
+        }
+
         public bool MarcaExiste(string marca)
         {
             var db = new ContextoBDUtilidad();
@@ -154,6 +196,7 @@ namespace InverPaper.Repositorios
                 db.Disconnect();
             }
         }
+
         public List<MarcaDto> ObtenerMarcas()
         {
             var marcas = new List<MarcaDto>();
@@ -163,7 +206,10 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = "SELECT * FROM Marca";  // Modificado para obtener todas las marcas
+                string query = @"SELECT m.Id, m.NombreMarca, m.IdEstado, e.NombreEstado
+                         FROM Marca m
+                         JOIN Estado e ON m.IdEstado = e.Id
+                         WHERE m.IdEstado = 1";  // Modificado para obtener todas las marcas ACTIVAS
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
