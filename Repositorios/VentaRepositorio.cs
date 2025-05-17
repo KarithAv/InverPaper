@@ -76,7 +76,7 @@ namespace InverPaper.Repositorios
             using (SqlConnection conn = new ContextoBDUtilidad().CONN())
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT v.Id, v.FechaVenta, v.Total, u.Nombre AS NombreUsuario " +
+                SqlCommand cmd = new SqlCommand("SELECT v.Id, v.FechaVenta, v.Total, CONCAT(u.Nombre,' ', u.Apellido) AS NombreUsuario " +
                                                 "FROM Venta v " +
                                                 "INNER JOIN Usuario u ON v.IdUsuario = u.Id " +
                                                 "WHERE CAST(v.FechaVenta AS DATE) = @FechaVenta", conn);

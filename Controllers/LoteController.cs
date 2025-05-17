@@ -36,7 +36,7 @@ namespace InverPaper.Controllers
                     .Select(p => new SelectListItem
                     {
                         Value = p.Id.ToString(),
-                        Text = p.Nombre
+                        Text = p.NombreCompleto
                     }),
                 FechaIngreso = DateTime.Now  // Asignamos la fecha de ingreso
             };
@@ -51,7 +51,7 @@ namespace InverPaper.Controllers
                 .Select(p => new SelectListItem
                 {
                     Value = p.Id.ToString(),
-                    Text = p.Nombre
+                    Text = p.NombreCompleto
                 });
 
             if (!ModelState.IsValid)

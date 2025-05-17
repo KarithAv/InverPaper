@@ -208,10 +208,9 @@
     <Compile Include="Utilidades\AutorizarSesionUtilidad.cs" />
     <Compile Include="Utilidades\CacheUtilidad.cs" />
     <Compile Include="Utilidades\ContextoBDUtilidad.cs" />
-    <Compile Include="Utilidades\EncabezadoPdfUtilidad.cs" />
     <Compile Include="Utilidades\EncriptadorUtilidad.cs" />
     <Compile Include="Utilidades\GestorCorreoUtilidad.cs" />
-    <Compile Include="Utilidades\GraficoUtilidad.cs" />
+    <Compile Include="Utilidades\PdfUtilidad.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -285,6 +284,9 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\fuentes\moon_get-Heavy.ttf" />
+    <Content Include="Content\fuentes\Quicksand_Bold.otf" />
+    <Content Include="Content\fuentes\Quicksand_Book.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\fontawesome\all.js" />
     <Content Include="Scripts\fontawesome\all.min.js" />
@@ -439,7 +441,6 @@
     <Content Include="Views\Cuenta\RestablecerContraseña.cshtml" />
     <Content Include="Views\Cuenta\CuerpoCorreo.cshtml" />
     <Content Include="Views\AjustesInventario\Ajustes.cshtml" />
-    <Content Include="Views\Reporte\ReporteDiario.cshtml" />
     <Content Include="Views\Reporte\Reportes.cshtml" />
     <Content Include="Views\Lote\Lotes.cshtml" />
   </ItemGroup>
