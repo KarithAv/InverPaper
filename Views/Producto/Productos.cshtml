@@ -7,17 +7,17 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table class="table table-bordered table-striped mt-3">
+<table class="table table-bordered table-striped mt-3 table-fixed">
     <thead class="thead-dark">
         <tr>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Stock Actual</th>
-            <th>Precio</th>
-            <th>Categoria</th>
-            <th>Marca</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            <th style="width: 12%;">Nombre</th>
+            <th style="width: 20%;">Descripcion</th>
+            <th style="width: 8%;">Stock Actual</th>
+            <th style="width: 8%;">Precio</th>
+            <th style="width: 15%;">Categoria</th>
+            <th style="width: 10%;">Marca</th>
+            <th style="width: 8%;">Estado</th>
+            <th style="width: 20%;">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -69,6 +69,23 @@
         </div>
     </div>
 </div>
+<style>
+    .table-fixed {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+        .table-fixed th, .table-fixed td {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+    }
+</style>
 
 <script>
     function confirmarEliminar(idProducto) {

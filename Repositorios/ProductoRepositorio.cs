@@ -354,15 +354,16 @@ namespace InverPaper.Repositorios
 
                 string query = @"
         SELECT TOP 5
-            p.Id, 
-            p.Nombre, 
-            SUM(dv.Cantidad) AS TotalVendido
-        FROM Venta v
-        INNER JOIN DETALLE_VENTA dv ON dv.IdVenta = v.Id
-        INNER JOIN Producto p ON p.Id = dv.IdProducto
-        WHERE CAST(v.FechaVenta AS DATE) = @Fecha
-        GROUP BY p.Id, p.Nombre
-        ORDER BY TotalVendido DESC";
+    p.Id, 
+    (p.Nombre + ' - ' + m.NombreMarca) AS NombreProductoMarca,
+    SUM(dv.Cantidad) AS TotalVendido
+FROM Venta v
+INNER JOIN DETALLE_VENTA dv ON dv.IdVenta = v.Id
+INNER JOIN Producto p ON p.Id = dv.IdProducto
+INNER JOIN Marca m ON m.Id = p.IdMarca
+WHERE CAST(v.FechaVenta AS DATE) = @Fecha
+GROUP BY p.Id, p.Nombre, m.NombreMarca
+ORDER BY TotalVendido DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -377,7 +378,7 @@ namespace InverPaper.Repositorios
                             productosVendidos.Add(new ProductoDto
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                Nombre = reader["Nombre"].ToString(),
+                                Nombre = reader["NombreProductoMarca"].ToString(),
                                 CantidadVendida = Convert.ToInt32(reader["TotalVendido"])
                             });
                         }

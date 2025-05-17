@@ -65,22 +65,24 @@ namespace InverPaper.Repositorios
 
                 string query = @"
             SELECT 
-                a.Id,
-                a.IdProducto,
-                p.Nombre AS NombreProducto,
-                a.CantidadAjustada,
-                a.FechaAjuste,
-                a.IdMotivo,
-                m.Motivo AS Motivo,
-                a.IdUsuario,
-                CONCAT (u.Nombre, ' ', u.Apellido) AS NombreUsuario,
-                a.Accion,
-                a.Comentarios
-            FROM AJUSTES_INVENTARIO a
-            INNER JOIN Producto p ON p.Id = a.IdProducto
-            INNER JOIN Usuario u ON u.Id = a.IdUsuario
-            INNER JOIN Motivo m ON m.Id = a.IdMotivo
-            WHERE CAST(a.FechaAjuste AS DATE) = @Fecha";
+    a.Id,
+    a.IdProducto,
+    p.Nombre AS NombreProducto,
+    ma.NombreMarca AS NombreMarca, -- Marca añadida
+    a.CantidadAjustada,
+    a.FechaAjuste,
+    a.IdMotivo,
+    m.Motivo AS Motivo,
+    a.IdUsuario,
+    CONCAT(u.Nombre, ' ', u.Apellido) AS NombreUsuario,
+    a.Accion,
+    a.Comentarios
+FROM AJUSTES_INVENTARIO a
+INNER JOIN Producto p ON p.Id = a.IdProducto
+INNER JOIN Marca ma ON ma.Id = p.IdMarca -- JOIN para obtener la marca
+INNER JOIN Usuario u ON u.Id = a.IdUsuario
+INNER JOIN Motivo m ON m.Id = a.IdMotivo
+WHERE CAST(a.FechaAjuste AS DATE) = @Fecha";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -95,6 +97,7 @@ namespace InverPaper.Repositorios
                                 Id = Convert.ToInt32(reader["Id"]),
                                 IdProducto = Convert.ToInt32(reader["IdProducto"]),
                                 NombreProducto = reader["NombreProducto"].ToString(),
+                                NombreMarca = reader["NombreMarca"].ToString(),
                                 CantidadAjustada = Convert.ToInt32(reader["CantidadAjustada"]),
                                 FechaAjuste = Convert.ToDateTime(reader["FechaAjuste"]),
                                 IdMotivo = Convert.ToInt32(reader["IdMotivo"]),

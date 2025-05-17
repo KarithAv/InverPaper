@@ -23,16 +23,17 @@ namespace InverPaper.Repositorios
                 db.Connect();
 
                 string query = @"
-            SELECT 
-                dv.Id,
-                dv.IdVenta,
-                dv.IdProducto,
-                p.Nombre AS NombreProducto,
-                dv.Cantidad,
-                dv.Subtotal
-            FROM DETALLE_VENTA dv
-            INNER JOIN Producto p ON dv.IdProducto = p.Id
-            WHERE dv.IdVenta = @IdVenta";
+           SELECT 
+    dv.Id,
+    dv.IdVenta,
+    dv.IdProducto,
+    (p.Nombre + ' - ' + m.NombreMarca) AS NombreProductoMarca,
+    dv.Cantidad,
+    dv.Subtotal
+FROM DETALLE_VENTA dv
+INNER JOIN Producto p ON dv.IdProducto = p.Id
+INNER JOIN Marca m ON m.Id = p.IdMarca
+WHERE dv.IdVenta = @IdVenta";
 
                 cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IdVenta", idVenta);
@@ -45,7 +46,7 @@ namespace InverPaper.Repositorios
                         Id = Convert.ToInt32(reader["Id"]),
                         IdVenta = Convert.ToInt32(reader["IdVenta"]),
                         IdProducto = Convert.ToInt32(reader["IdProducto"]),
-                        NombreProducto = reader["NombreProducto"].ToString(),
+                        NombreProducto = reader["NombreProductoMarca"].ToString(),
                         Cantidad = Convert.ToInt32(reader["Cantidad"]),
                         Subtotal = Convert.ToDecimal(reader["Subtotal"])
                     };

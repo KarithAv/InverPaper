@@ -10,6 +10,7 @@ namespace InverPaper.Dtos
         public int Id { get; set; }
         public int IdProducto { get; set; }
         public string NombreProducto { get; set; } = String.Empty;
+        public string NombreMarca { get; set; }
         public int CantidadAjustada { get; set; }
         public DateTime FechaAjuste { get; set; }
         public int IdMotivo { get; set; }
