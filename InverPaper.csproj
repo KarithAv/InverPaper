@@ -235,6 +235,7 @@
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\fuentes.css" />
     <Content Include="Content\imagenes\logo-inverpaper.png" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />

@@ -18,6 +18,8 @@
         });
     </script>
 }
+<div id="mensaje-temporal" class="alert alert-warning text-center" style="display:none;"></div>
+
 
 <h2 class="text-center">Registrar Venta</h2>
 
@@ -41,9 +43,9 @@
                 <option value="">-- Seleccione un producto --</option>
                 @foreach (var producto in Model.ProductosDisponibles)
                 {
-            <option value="@producto.Id" data-nombre="@producto.NombreCompleto" data-marca="@producto.NombreMarca" data-precio="@producto.PrecioVenta" data-stock="@producto.StockActual">
-                @producto.NombreCompleto - @producto.NombreMarca (@producto.PrecioVenta)
-            </option>
+                    <option value="@producto.Id" data-nombre="@producto.NombreCompleto" data-marca="@producto.NombreMarca" data-precio="@producto.PrecioVenta" data-stock="@producto.StockActual">
+                        @producto.NombreCompleto - @producto.NombreMarca (@producto.PrecioVenta)
+                    </option>
                 }
             </select>
         </div>
@@ -51,7 +53,7 @@
             <input type="number" id="cantidadInput" class="form-control" placeholder="Cantidad" min="1" value="1" />
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-success w-100" onclick="agregarAlCarrito()">Añadir</button>
+            <button type="button" class="btn btn-naranja w-100" onclick="agregarAlCarrito()">Añadir</button>
         </div>
     </div>
 
@@ -73,7 +75,7 @@
 
     <h4 class="text-right">Total: $<span id="totalVenta">0.00</span></h4>
 
-    <button type="submit" class="btn btn-primary w-100">Registrar Venta</button>
+    <button type="submit" class="btn btn-naranja">Registrar Venta</button>
 }
 <div class="modal fade" id="ventaExitosaModal" tabindex="-1" aria-labelledby="ventaExitosaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -146,19 +148,20 @@
         const cantidad = parseInt(cantidadInput.value);
 
         if (!id || cantidad < 1) {
-            alert("Seleccione un producto válido y una cantidad mayor a 0.");
+            mostrarMensajeTemporal("Seleccione un producto válido y una cantidad mayor a 0.");
             return;
         }
 
         if (stock === 0) {
-            alert(`No hay stock disponible para el producto "${nombre}".`);
+            mostrarMensajeTemporal(`No hay stock disponible para el producto "${nombre}".`);
             return;
         }
 
         if (cantidad > stock) {
-            alert(`Solo hay ${stock} unidades disponibles para el producto "${nombre}".`);
+            mostrarMensajeTemporal(`Solo hay ${stock} unidades disponibles para el producto "${nombre}".`);
             return;
         }
+
 
         const subtotal = (precio * cantidad).toFixed(2);
         const tbody = document.querySelector("#carritoTable tbody");
@@ -177,6 +180,16 @@
         calcularTotal();
         reorganizarIndices();
         select.selectedIndex = 0;
+    }
+    function mostrarMensajeTemporal(mensaje, tipo = 'warning') {
+        const mensajeDiv = document.getElementById('mensaje-temporal');
+        mensajeDiv.className = `alert alert-${tipo} text-center`;
+        mensajeDiv.textContent = mensaje;
+        mensajeDiv.style.display = 'block';
+
+        setTimeout(() => {
+            mensajeDiv.style.display = 'none';
+        }, 4000); // 4 segundos
     }
 
 

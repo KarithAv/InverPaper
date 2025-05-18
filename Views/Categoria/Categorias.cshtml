@@ -50,7 +50,8 @@
     </tbody>
 </table>
 
-@Html.ActionLink("Crear Nueva Categoria", "Crear")
+<button class="btn-naranja btn-sm" onclick="window.location.href='@Url.Action("Crear", "Categoria")'">Crear Categoria</button>
+
 
 <!-- Modal de Confirmación -->
 <div class="modal fade" id="modalEliminarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalEliminarCategoriaLabel" aria-hidden="true">

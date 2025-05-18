@@ -10,46 +10,8 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-@font-face {
-    font-family: 'Moon Get';
-    src: url('../Fuentes/moon_get-Heavy.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../Fuentes/Quicksand-Book.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../fuentes/Quicksand-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-.titulo {
-    font-family: 'Moon Get', Arial, sans-serif;
-    font-size: 28px;
-    font-weight: normal;
-    color: #222;
-}
-
-.subtitulo {
-    font-family: 'Quicksand', Arial, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: #444;
-}
-
-.texto {
-    font-family: 'Quicksand', Arial, sans-serif;
-    font-size: 14px;
-    font-weight: normal;
-    color: #555;
-}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" / >
 
 :root {
     --blue: #4e73df;

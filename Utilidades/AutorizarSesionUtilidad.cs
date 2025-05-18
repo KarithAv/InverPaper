@@ -13,7 +13,7 @@ namespace InverPaper.Utilidades
             // Si no existe la sesión de usuario, redirige al login
             if (HttpContext.Current.Session["usuario"] == null)
             {
-                contexto.Controller.TempData["MensajeLogin"] = "Debe iniciar sesión primero.";
+                //contexto.Controller.TempData["MensajeLogin"] = "Debe iniciar sesión primero.";
                 contexto.Result = new RedirectToRouteResult(
                     new System.Web.Routing.RouteValueDictionary
                     {

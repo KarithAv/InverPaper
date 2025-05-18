@@ -10,58 +10,62 @@
         overflow: hidden;
     }
 </style>
-
 <div class="jumbotron text-center">
     <h1 class="display-4">Bienvenido a InverPaper</h1>
     <p class="lead">Sistema de gestión para tu papelería</p>
     <hr class="my-4">
     <p>Administra productos, usuarios, ventas y más desde un solo lugar.</p>
+    <button class="btn-naranja" onclick="window.location.href='@Url.Action("ReporteInventario", "Reporte")'">📄 Descargar Reporte de Inventario</button>
 
-    <!-- Imagen centrada con opacidad -->
-    <div style="text-align: center;">
-        <img src="@Url.Content("~/Content/imagenes/logo-inverpaper.png")"
-             alt="Decorativo"
-             style="opacity: 0.1; width: 400px; max-width: 100%; margin: 20px auto;" />
-    </div>
-</div>
 
-@if (productos != null && productos.Count > 0)
-{
-    <h2 class="mt-5">📉 Productos próximos a agotarse</h2>
-    <table class="table table-bordered table-striped mt-3">
-        <thead class="thead-dark">
-            <tr>
-                <th>Nombre</th>
-                <th>Stock Actual</th>
-                <th>Stock Mínimo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var producto in productos)
-            {
-                <tr class="@(producto.StockActual == 0 ? "table-danger" : "table-warning")">
-                    <td>@producto.Nombre</td>
-                    <td>@producto.StockActual</td>
-                    <td>@producto.StockMin</td>
+    @if (productos != null && productos.Count > 0)
+    {
+        <h2 class="mt-5">📉 Productos próximos a agotarse</h2>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Stock Actual</th>
+                    <th>Stock Mínimo</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <div class="alert alert-success mt-4" role="alert">
-        ✅ No hay productos próximos a agotarse.
-    </div>
-}
+            </thead>
+            <tbody>
+                @foreach (var producto in productos)
+                {
+                    <tr class="@(producto.StockActual == 0 ? "table-danger" : "table-warning")">
+                        <td>@producto.Nombre</td>
+                        <td>@producto.StockActual</td>
+                        <td>@producto.StockMin</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-success mt-4" role="alert">
+            ✅ No hay productos próximos a agotarse.
+        </div>
+    }
 
-<script>
-    window.addEventListener("pageshow", function (event) {
-        // Detecta si el usuario volvió con el botón "atrás"
-        if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-            // Redirige al logout para cerrar sesión
-            window.location.href = '/Cuenta/LogoutPorAtras';
+    <style>
+        .btn-naranja {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Quicksand2', sans-serif;
+            display: inline-block;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-    });
-</script>
+
+            .btn-naranja:hover {
+                background-color: #e65c00;
+            }
+    </style>
+
 
