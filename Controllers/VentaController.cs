@@ -11,7 +11,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
-    [AutorizarRolUtilidad(2)]
+    //[AutorizarRolUtilidad(2)]
     public class VentaController : Controller
     {
         private VentaServicio _ventaServicio = new VentaServicio();
@@ -62,7 +62,7 @@ namespace InverPaper.Controllers
             _ventaServicio.RegistrarVenta(venta, detalles);
             TempData["VentaExitosa"] = "¡Venta registrada exitosamente!";
 
-            return RedirectToAction("RegistrarVenta"); // o a una vista de confirmación
+            return RedirectToAction("RegistrarVenta"); 
         }
 
     }

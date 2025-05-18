@@ -1,0 +1,52 @@
+﻿
+@font-face {
+    font-family: 'Moon_get';
+    src: url('fuentes/moon_get-Heavy.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('fuentes/Quicksand_Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Quicksand2';
+    src: url('fuentes/Quicksand_Book.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+/* Títulos: Moon */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Moon_get', sans-serif;
+}
+
+/* Subtítulos: Quicksand Bold */
+.subtitulo {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+}
+
+/* Texto normal: Quicksand normal */
+body, p, span, li, a {
+    font-family: 'Quicksand2', sans-serif;
+    font-weight: 400;
+}
+.btn-naranja {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 7px 15px;
+    border-radius: 5px;
+    font-family: 'Quicksand2', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-naranja:hover {
+        background-color: #e65c00;
+    }
+
+

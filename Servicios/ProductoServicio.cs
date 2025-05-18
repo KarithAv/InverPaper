@@ -40,5 +40,10 @@ namespace InverPaper.Servicios
         {
             _productoRepositorio.EliminarProducto(id, usuario);
         }
+        public List<ProductoDto> ObtenerInventarioActual()
+        {
+            return _productoRepositorio.ListarProductos();
+        }
+
     }
 }

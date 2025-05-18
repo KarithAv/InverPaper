@@ -20,7 +20,7 @@ namespace InverPaper.Repositorios
             try
             {
                 db.Connect();
-                string query = @"SELECT p.Id, p.Nombre, p.Descripcion, p.StockActual, p.PrecioVenta, 
+                string query = @"SELECT p.Id, p.Nombre, p.Descripcion, p.StockActual,p.StockMin, p.PrecioVenta, 
                                 p.IdCategoria, c.NombreCategoria, 
                                 p.IdMarca, m.NombreMarca, 
                                 p.IdEstado, e.NombreEstado
@@ -41,6 +41,7 @@ namespace InverPaper.Repositorios
                             Nombre = reader["Nombre"].ToString(),
                             Descripcion = reader["Descripcion"].ToString(),
                             StockActual = Convert.ToInt32(reader["StockActual"]),
+                            StockMin = Convert.ToInt32(reader["StockMin"]),
                             PrecioVenta = Convert.ToDecimal(reader["PrecioVenta"]),
                             IdCategoria = Convert.ToInt32(reader["IdCategoria"]),
                             NombreCategoria = reader["NombreCategoria"].ToString(),
@@ -392,6 +393,55 @@ ORDER BY TotalVendido DESC";
                 db.Disconnect();
             }
         }
+//        public List<ProductoDto> ObtenerInventarioActual()
+//{
+//    var db = new ContextoBDUtilidad();
+//    var conn = db.CONN();
+
+//    try
+//    {
+//        db.Connect();
+
+//        string query = @"
+//            SELECT 
+//                p.Id,
+//                p.Nombre AS NombreProducto,
+//                m.NombreMarca,
+//                p.StockActual,
+//                p.StockMin,
+//                e.NombreEstado
+//            FROM Producto p
+//            INNER JOIN Marca m ON m.Id = p.IdMarca
+//            INNER JOIN Estado e ON e.Id = p.IdEstado";
+
+//        using (SqlCommand cmd = new SqlCommand(query, conn))
+//        {
+//            using (SqlDataReader reader = cmd.ExecuteReader())
+//            {
+//                List<ProductoDto> inventario = new List<ProductoDto>();
+
+//                while (reader.Read())
+//                {
+//                    inventario.Add(new ProductoDto
+//                    {
+//                        Id = Convert.ToInt32(reader["Id"]),
+//                        Nombre = reader["NombreProducto"].ToString(),
+//                        NombreMarca = reader["NombreMarca"].ToString(),
+//                        StockActual = Convert.ToInt32(reader["StockActual"]),
+//                        StockMin = Convert.ToInt32(reader["StockMin"]),
+//                        NombreEstado = reader["NombreEstado"].ToString()
+//                    });
+//                }
+
+//                return inventario;
+//            }
+//        }
+//    }
+//    finally
+//    {
+//        db.Disconnect();
+//    }
+//}
 
 
     }

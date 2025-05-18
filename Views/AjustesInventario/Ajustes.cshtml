@@ -30,7 +30,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.IdProducto)
         @Html.DropDownListFor(m => m.IdProducto, Model.ListaProductos, "-- Seleccione un producto --", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.IdProducto)
+        @Html.ValidationMessageFor(m => m.IdProducto, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.CantidadAjustada)
@@ -63,7 +63,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class=" btn btn-naranja">Guardar</button>
     @Html.ActionLink("Cancelar", "Index", "Principal", null, new { @class = "btn btn-secondary" })
 
     <div class="modal fade" id="ajusteExitosoModal" tabindex="-1" aria-labelledby="ajusteExitosoLabel" aria-hidden="true">

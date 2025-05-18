@@ -17,6 +17,7 @@ namespace InverPaper.Controllers
     {
         VentaServicio _ventaServicio = new VentaServicio();
         AjustesInventarioServicio _ajusteInventarioServicio = new AjustesInventarioServicio();
+        ProductoServicio _productoServicio = new ProductoServicio();
 
         public ActionResult Reportes ()
         {
@@ -223,5 +224,51 @@ namespace InverPaper.Controllers
 
             return File(ms, "application/pdf", $"ReporteAjustesInventario_{fechaReporte:yyyyMMdd}.pdf");
         }
+        public ActionResult ReporteInventario()
+        {
+            var productos = _productoServicio.ObtenerInventarioActual();
+
+            if (productos == null || !productos.Any())
+            {
+                TempData["Mensaje"] = "No se encontraron productos en el inventario.";
+                return RedirectToAction("Index", "Principal");
+            }
+
+            MemoryStream ms = new MemoryStream();
+            Document doc = new Document(PageSize.A4.Rotate(), 25, 25, 30, 30); // Orientación horizontal
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            writer.CloseStream = false;
+
+            doc.Open();
+
+            PdfUtilidad.AgregarEncabezado(doc, writer, "REPORTE DE INVENTARIO", DateTime.Now);
+            PdfUtilidad.AgregarSubtitulo(doc, "Listado completo de productos registrados");
+
+            // Encabezados y cuerpo de la tabla
+            string[] encabezados = {
+        "Producto", "Marca", "Stock Actual", "Stock Mínimo", "Estado"
+    };
+
+            string[,] valores = new string[productos.Count, encabezados.Length];
+
+            for (int i = 0; i < productos.Count; i++)
+            {
+                var p = productos[i];
+                valores[i, 0] = p.Nombre;
+                valores[i, 1] = p.NombreMarca;
+                valores[i, 2] = p.StockActual.ToString();
+                valores[i, 3] = p.StockMin.ToString();
+                valores[i, 4] = p.NombreEstado;
+            }
+
+            PdfPTable tabla = PdfUtilidad.CrearTablaHorizontal(encabezados, valores);
+            doc.Add(tabla);
+
+            doc.Close();
+            ms.Position = 0;
+
+            return File(ms, "application/pdf", $"ReporteInventario_{DateTime.Now:yyyyMMdd}.pdf");
+        }
+
     }
 }

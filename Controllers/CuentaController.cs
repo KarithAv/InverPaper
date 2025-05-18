@@ -50,7 +50,8 @@ namespace InverPaper.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login");
+            Session.Abandon();
+            return RedirectToAction("Login", "Cuenta");
         }
         public ActionResult RecuperarContraseña()
         {
@@ -175,12 +176,6 @@ namespace InverPaper.Controllers
             }
 
             return View(viewModel);
-        }
-        public ActionResult LogoutPorAtras()
-        {
-            Session.Clear();
-            Session.Abandon();
-            return RedirectToAction("Login", "Cuenta");
         }
 
     }
