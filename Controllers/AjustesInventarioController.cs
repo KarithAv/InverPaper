@@ -12,6 +12,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(3)]
     public class AjustesInventarioController : Controller
     {
         private readonly MotivoRepositorio _motivoRepo = new MotivoRepositorio();

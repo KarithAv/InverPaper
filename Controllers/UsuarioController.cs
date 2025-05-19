@@ -13,6 +13,7 @@ using InverPaper.Servicios;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(1)]
     public class UsuarioController : Controller
     {
         private UsuarioRepositorio _usuarioRepo = new UsuarioRepositorio ();

@@ -26,6 +26,7 @@ namespace InverPaper.Controllers
             var lista = _productoRepo.ListarProductos(); // o usuarioService.ObtenerUsuarios()
             return View(lista);
         }
+        [AutorizarRolUtilidad(1)]
         public ActionResult Crear()
         {
             // Obtener las listas de categorías, marcas y estados desde el servicio o repositorio
@@ -35,7 +36,7 @@ namespace InverPaper.Controllers
 
             return View();
         }
-
+        [AutorizarRolUtilidad(1)]
         [HttpPost]
         public ActionResult Crear(ProductoViewModel productoViewModel)
         {
@@ -76,6 +77,7 @@ namespace InverPaper.Controllers
             return View(productoViewModel);
         }
         //----------------------------------------------------------------------------------------------------------------------------------------------------
+        [AutorizarRolUtilidad(1)]
         public ActionResult Editar(int id)
         {
             var productoDto = _productoRepo.ObtenerProductoPorId(id);
@@ -105,6 +107,7 @@ namespace InverPaper.Controllers
 
             return View(productoViewModel);
         }
+        [AutorizarRolUtilidad(1)]
         [HttpPost]
         public ActionResult Editar(ProductoViewModel productoViewModel)
         {
@@ -143,6 +146,7 @@ namespace InverPaper.Controllers
             return View(productoViewModel);
         }
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        [AutorizarRolUtilidad(1)]
         [HttpPost]
         public ActionResult Eliminar(int id)
         {

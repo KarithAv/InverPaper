@@ -28,7 +28,7 @@
     @Html.HiddenFor(m => m.IdUsuario)
 
     <div class="form-group">
-        @Html.LabelFor(m => m.IdProducto)
+        @Html.LabelFor(m => m.IdProducto, "Producto")
         @Html.DropDownListFor(m => m.IdProducto, Model.ListaProductos, "-- Seleccione un producto --", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.IdProducto, "", new { @class = "text-danger" })
     </div>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.IdMotivo)
+        @Html.LabelFor(m => m.IdMotivo, "Motivo")
         @Html.DropDownListFor(m => m.IdMotivo, Model.ListaMotivos, "-- Seleccione un motivo --", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.IdMotivo, "", new { @class = "text-danger" })
     </div>
@@ -63,7 +63,7 @@
     </div>
 
 
-    <button type="submit" class=" btn btn-naranja">Guardar</button>
+    <button type="submit" class=" btn btn-naranja">Registrar Ajuste</button>
     @Html.ActionLink("Cancelar", "Index", "Principal", null, new { @class = "btn btn-secondary" })
 
     <div class="modal fade" id="ajusteExitosoModal" tabindex="-1" aria-labelledby="ajusteExitosoLabel" aria-hidden="true">

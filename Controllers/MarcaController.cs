@@ -12,6 +12,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(1)]
     public class MarcaController : Controller
     {
      
