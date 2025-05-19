@@ -12,6 +12,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(3)]
     public class LoteController : Controller
     {
         private readonly LoteRepositorio _loteRepo = new LoteRepositorio();
@@ -54,7 +55,7 @@ namespace InverPaper.Controllers
                     Text = p.NombreCompleto
                 });
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) 
             {
                 return View(model);
             }

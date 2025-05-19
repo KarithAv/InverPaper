@@ -12,6 +12,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [AutorizarRolUtilidad(1)]
     public class CategoriaController : Controller
     {
         private CategoriaRepositorio _categoriaRepo = new CategoriaRepositorio(); // Repositorio para manejar la base de datos

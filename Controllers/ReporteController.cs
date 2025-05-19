@@ -43,6 +43,7 @@ namespace InverPaper.Controllers
         }
 
         // GET: Reporte
+        [AutorizarRolUtilidad(1,2)]
         public ActionResult ReporteDiario(DateTime fechaReporte)
         {
             var ventas = _ventaServicio.ObtenerVentasDelDia(fechaReporte);
@@ -106,7 +107,7 @@ namespace InverPaper.Controllers
             ms.Position = 0;
             return File(ms, "application/pdf", $"ReporteVentas_{fechaReporte:yyyyMMdd}.pdf");
         }
-
+        [AutorizarRolUtilidad(1)]
         public ActionResult ReporteProductoMasVendido(DateTime fechaReporte)
         {
             var productosMasVendidos = _ventaServicio.ObtenerProductosMasVendidosDelDia(fechaReporte);
@@ -171,7 +172,7 @@ namespace InverPaper.Controllers
 
             return File(ms, "application/pdf", $"ReporteProductoMasVendido_{fechaReporte:yyyyMMdd}.pdf");
         }
-
+        [AutorizarRolUtilidad(1)]
         public ActionResult ReporteAjustesInventario(DateTime fechaReporte)
         {
             var ajustes = _ajusteInventarioServicio.ObtenerAjustesPorFecha(fechaReporte);
