@@ -398,12 +398,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @{
+        Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+        Response.Cache.SetValidUntilExpires(false);
+        Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
         Response.Cache.SetNoStore();
     }
-
-
 </body>
 </html>
 
