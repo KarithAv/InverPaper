@@ -16,6 +16,10 @@ namespace InverPaper.Controllers
         [CacheUtilidad]
         public ActionResult Index()
         {
+            if (Session["Usuario"] == null)
+            {
+                return RedirectToAction("Login", "Cuenta");
+            }
             var repo = new ProductoRepositorio();
             var productosBajoStock = repo.ObtenerProductosProximosAgotarse();
             ViewBag.ProductosBajoStock = productosBajoStock;
