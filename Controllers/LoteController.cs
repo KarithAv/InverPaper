@@ -13,6 +13,7 @@ namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
     [AutorizarRolUtilidad(3)]
+    [CacheUtilidad]
     public class LoteController : Controller
     {
         private readonly LoteRepositorio _loteRepo = new LoteRepositorio();

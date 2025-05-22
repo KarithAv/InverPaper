@@ -51,8 +51,21 @@ namespace InverPaper.Controllers
         {
             Session.Clear();
             Session.Abandon();
+            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
             return RedirectToAction("Login", "Cuenta");
         }
+        public ActionResult VerificarSesion()
+        {
+            if (Session["Usuario"] == null)
+            {
+                return new HttpStatusCodeResult(401);
+            }
+
+            return new HttpStatusCodeResult(200);
+        }
+
         public ActionResult RecuperarContraseña()
         {
             return View();
@@ -90,7 +103,9 @@ namespace InverPaper.Controllers
 
             // Enviar correo
             var correoUtil = new GestorCorreoUtilidad();
-            correoUtil.EnviarCorreo(usuario.Correo, "Recuperación de Contraseña", mensaje, true);
+            string rutaImagen = Server.MapPath("~/Content/imagenes/logo-inverpaper.png");
+            correoUtil.EnviarCorreo(usuario.Correo, "Recuperación de Contraseña", mensaje, esHtml:true, rutaImagen);
+
 
             ViewBag.Mensaje = "Se ha enviado un enlace de recuperación a tu correo.";
             return View();

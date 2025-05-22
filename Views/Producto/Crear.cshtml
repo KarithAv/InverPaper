@@ -23,7 +23,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.StockMin)
+        @Html.LabelFor(model => model.StockMin, "StockMinimo")
         @Html.TextBoxFor(model => model.StockMin, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.StockMin, "", new { @class = "text-danger" })
     </div>
@@ -41,18 +41,18 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IdCategoria)
+        @Html.LabelFor(model => model.IdCategoria, "Categoria")
         @Html.DropDownListFor(model => model.IdCategoria, (SelectList)ViewBag.Categorias, "Seleccione la categoría", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IdMarca)
+        @Html.LabelFor(model => model.IdMarca, "Marca")
         @Html.DropDownListFor(model => model.IdMarca, (SelectList)ViewBag.Marcas, "Seleccione la marca", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.IdMarca, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.IdEstado)
+        @Html.LabelFor(model => model.IdEstado, "Estado")
         @Html.DropDownListFor(model => model.IdEstado, (SelectList)ViewBag.Estados, "Seleccione el estado", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.IdEstado, "", new { @class = "text-danger" })
     </div>

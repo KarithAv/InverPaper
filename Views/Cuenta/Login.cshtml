@@ -45,4 +45,12 @@
         @Html.ActionLink(" ¿ Olvidaste tu contraseña ?", "RecuperarContraseña", "Cuenta", null, new { @class = "btn btn-link" })
     </div>
 }
+<script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.location.href = '/Cuenta/Login';
+        };
+    }
+</script>
 

@@ -404,6 +404,16 @@
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         Response.Cache.SetNoStore();
     }
+    <script>
+        window.onload = function () {
+            fetch('/Cuenta/VerificarSesion')
+                .then(resp => {
+                    if (!resp.ok) {
+                        window.location.href = '/Cuenta/Login';
+                    }
+                });
+        };
+    </script>
 </body>
 </html>
 

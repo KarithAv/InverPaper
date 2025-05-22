@@ -14,6 +14,7 @@ namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
     [AutorizarRolUtilidad(1)]
+    [CacheUtilidad]
     public class UsuarioController : Controller
     {
         private UsuarioRepositorio _usuarioRepo = new UsuarioRepositorio ();
