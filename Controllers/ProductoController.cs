@@ -12,6 +12,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [CacheUtilidad]
     public class ProductoController : Controller
     {
         private ProductoRepositorio _productoRepo = new ProductoRepositorio();

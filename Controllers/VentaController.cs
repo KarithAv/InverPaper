@@ -12,6 +12,7 @@ namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
     [AutorizarRolUtilidad(2)]
+    [CacheUtilidad]
     public class VentaController : Controller
     {
         private VentaServicio _ventaServicio = new VentaServicio();

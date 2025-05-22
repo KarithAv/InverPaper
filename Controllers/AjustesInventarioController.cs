@@ -13,6 +13,7 @@ namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
     [AutorizarRolUtilidad(3,2)]
+    [CacheUtilidad]
     public class AjustesInventarioController : Controller
     {
         private readonly MotivoRepositorio _motivoRepo = new MotivoRepositorio();

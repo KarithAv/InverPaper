@@ -13,6 +13,7 @@ using InverPaper.Utilidades;
 namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
+    [CacheUtilidad]
     public class ReporteController : Controller
     {
         VentaServicio _ventaServicio = new VentaServicio();

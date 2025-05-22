@@ -13,6 +13,7 @@ namespace InverPaper.Controllers
 {
     [AutorizarSesionUtilidad]
     [AutorizarRolUtilidad(1)]
+    [CacheUtilidad]
     public class MarcaController : Controller
     {
      
